@@ -380,27 +380,28 @@
             <!-- Step 1: Amount -->
             <div class="modal-step" id="step1">
                 <div class="modal-header">
-                    <h2>Voter pour <span id="modalCandidateName"></span></h2>
-                    <p>Candidate N°<span id="modalCandidateNumber"></span></p>
+                    <h2><span id="modalCandidateName"></span></h2>
+                    <p>Finaliste N°<span id="modalCandidateNumber"></span></p>
                 </div>
                 <div class="modal-body">
                     <div class="vote-calculator">
-                        <label>Montant (FCFA) :</label>
+                        <label>Choisissez le montant</label>
                         <div class="amount-input-group">
                             <button class="amount-btn" onclick="adjustAmount(-100)">-</button>
                             <input type="number" id="voteAmount" min="100" step="100" value="100" onchange="updateVotes()" inputmode="numeric">
                             <button class="amount-btn" onclick="adjustAmount(100)">+</button>
                         </div>
                         <div class="quick-amounts">
-                            <button onclick="setAmount(100)">100</button>
-                            <button onclick="setAmount(500)">500</button>
-                            <button onclick="setAmount(1000)">1K</button>
-                            <button onclick="setAmount(2000)">2K</button>
-                            <button onclick="setAmount(5000)">5K</button>
+                            <button onclick="setAmount(100)">100 F</button>
+                            <button onclick="setAmount(500)">500 F</button>
+                            <button onclick="setAmount(1000)">1 000 F</button>
+                            <button onclick="setAmount(2000)">2 000 F</button>
+                            <button onclick="setAmount(5000)">5 000 F</button>
                         </div>
                         <div class="votes-preview">
-                            <i class="fas fa-heart"></i>
-                            = <strong id="votesPreview">1</strong> vote(s)
+                            Vous obtiendrez
+                            <strong id="votesPreview">1</strong>
+                            vote(s)
                         </div>
                     </div>
                     <button class="btn btn-next" onclick="goToStep2()">
@@ -515,10 +516,10 @@
     <div class="modal-overlay" id="successModal">
         <div class="modal success-modal">
             <div class="success-icon">
-                <i class="fas fa-hourglass-half"></i>
+                <i class="fas fa-check"></i>
             </div>
-            <h2>Vote soumis !</h2>
-            <p>Votre vote sera comptabilisé après vérification du paiement.</p>
+            <h2>Vote enregistré !</h2>
+            <p>Votre vote sera comptabilisé après vérification du paiement. Merci pour votre soutien !</p>
             <div class="share-buttons" style="justify-content: center; margin: 20px 0;">
                 <a href="#" class="share-btn whatsapp" id="successWhatsapp">
                     <i class="fab fa-whatsapp"></i> Partager
