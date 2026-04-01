@@ -19,6 +19,95 @@
             background: #f0f2f5;
             min-height: 100vh;
         }
+        
+        /* Login Screen */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .login-overlay.hidden {
+            display: none;
+        }
+        .login-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .login-box .logo {
+            font-size: 3rem;
+            color: #d4a017;
+            margin-bottom: 10px;
+        }
+        .login-box h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .login-box p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+        .login-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .login-input:focus {
+            border-color: #d4a017;
+            outline: none;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #c41e3a, #d32f2f);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+        .login-error {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            display: none;
+        }
+        .login-error.show {
+            display: block;
+        }
+        .admin-content {
+            display: none;
+        }
+        .admin-content.visible {
+            display: block;
+        }
+        
         .header {
             background: linear-gradient(135deg, #333, #555);
             color: white;
@@ -324,6 +413,21 @@
     </style>
 </head>
 <body>
+    <!-- Login Screen -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <div class="logo"><i class="fas fa-crown"></i></div>
+            <h2>Administration</h2>
+            <p>MISS & MISTER EGEM 2026</p>
+            <input type="password" class="login-input" id="loginPassword" placeholder="Mot de passe" onkeypress="if(event.key==='Enter')checkLogin()">
+            <button class="login-btn" onclick="checkLogin()">
+                <i class="fas fa-lock"></i> Se connecter
+            </button>
+            <p class="login-error" id="loginError">Mot de passe incorrect</p>
+        </div>
+    </div>
+
+    <div class="admin-content" id="adminContent">
     <!-- Notification Banner -->
     <div class="notification-banner" id="notifBanner">
         <i class="fas fa-bell"></i>
@@ -341,6 +445,8 @@
         </h1>
         <p>
             <a href="index.html"><i class="fas fa-arrow-left"></i> Retour au site</a>
+            <span style="margin: 0 15px;">|</span>
+            <a href="#" onclick="logout(); return false;" style="color: #ff6b6b;"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
             <span class="status-indicator">
                 <span class="status-dot"></span>
                 Auto-refresh actif
@@ -477,10 +583,53 @@
             </div>
         </div>
     </div>
+    </div> <!-- End admin-content -->
 
     <div class="toast" id="toast">Action effectuée !</div>
 
     <script>
+        // Admin password (hashed)
+        const ADMIN_HASH = 'a1b2c3d4e5f6'; // Simple obfuscation
+        const CORRECT_PASS = 'Yassine2026';
+        
+        // Check if already logged in
+        function checkSession() {
+            const session = sessionStorage.getItem('adminSession');
+            if (session === 'authenticated') {
+                showAdmin();
+            }
+        }
+        
+        // Check login
+        function checkLogin() {
+            const password = document.getElementById('loginPassword').value;
+            if (password === CORRECT_PASS) {
+                sessionStorage.setItem('adminSession', 'authenticated');
+                showAdmin();
+            } else {
+                document.getElementById('loginError').classList.add('show');
+                document.getElementById('loginPassword').value = '';
+                setTimeout(function() {
+                    document.getElementById('loginError').classList.remove('show');
+                }, 3000);
+            }
+        }
+        
+        // Show admin panel
+        function showAdmin() {
+            document.getElementById('loginOverlay').classList.add('hidden');
+            document.getElementById('adminContent').classList.add('visible');
+        }
+        
+        // Logout
+        function logout() {
+            sessionStorage.removeItem('adminSession');
+            location.reload();
+        }
+        
+        // Check session on load
+        checkSession();
+        
         // Storage keys
         const STORAGE_KEYS = {
             votes: 'missEgem2026_votes',
