@@ -20,6 +20,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -112,6 +113,9 @@
                             <i class="fas fa-heart"></i>
                             <span id="votes-1">0</span> votes
                         </div>
+                        <div class="chart-container">
+                            <canvas id="chart-1"></canvas>
+                        </div>
                         <button class="btn btn-vote" onclick="openVoteModal(1, 'EBI ONGONO')">
                             <i class="fas fa-vote-yea"></i> Voter
                         </button>
@@ -131,6 +135,9 @@
                         <div class="candidate-votes">
                             <i class="fas fa-heart"></i>
                             <span id="votes-2">0</span> votes
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-2"></canvas>
                         </div>
                         <button class="btn btn-vote" onclick="openVoteModal(2, 'KOLNIKIE FLEUR')">
                             <i class="fas fa-vote-yea"></i> Voter
@@ -152,6 +159,9 @@
                             <i class="fas fa-heart"></i>
                             <span id="votes-3">0</span> votes
                         </div>
+                        <div class="chart-container">
+                            <canvas id="chart-3"></canvas>
+                        </div>
                         <button class="btn btn-vote" onclick="openVoteModal(3, 'NGA NNANG')">
                             <i class="fas fa-vote-yea"></i> Voter
                         </button>
@@ -171,6 +181,9 @@
                         <div class="candidate-votes">
                             <i class="fas fa-heart"></i>
                             <span id="votes-4">0</span> votes
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-4"></canvas>
                         </div>
                         <button class="btn btn-vote" onclick="openVoteModal(4, 'MOUKAM Merciale')">
                             <i class="fas fa-vote-yea"></i> Voter
@@ -204,6 +217,9 @@
                             <i class="fas fa-star"></i>
                             <span id="votes-5">0</span> votes
                         </div>
+                        <div class="chart-container">
+                            <canvas id="chart-5"></canvas>
+                        </div>
                         <button class="btn btn-vote mister" onclick="openVoteModal(5, 'YOMBI BOUTIFIN Jean')">
                             <i class="fas fa-vote-yea"></i> Voter
                         </button>
@@ -223,6 +239,9 @@
                         <div class="candidate-votes mister">
                             <i class="fas fa-star"></i>
                             <span id="votes-6">0</span> votes
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-6"></canvas>
                         </div>
                         <button class="btn btn-vote mister" onclick="openVoteModal(6, 'MBAMA ASSANGA')">
                             <i class="fas fa-vote-yea"></i> Voter
@@ -244,6 +263,9 @@
                             <i class="fas fa-star"></i>
                             <span id="votes-7">0</span> votes
                         </div>
+                        <div class="chart-container">
+                            <canvas id="chart-7"></canvas>
+                        </div>
                         <button class="btn btn-vote mister" onclick="openVoteModal(7, 'NTIEGE EWANE')">
                             <i class="fas fa-vote-yea"></i> Voter
                         </button>
@@ -264,6 +286,9 @@
                             <i class="fas fa-star"></i>
                             <span id="votes-8">0</span> votes
                         </div>
+                        <div class="chart-container">
+                            <canvas id="chart-8"></canvas>
+                        </div>
                         <button class="btn btn-vote mister" onclick="openVoteModal(8, 'KEUBOU')">
                             <i class="fas fa-vote-yea"></i> Voter
                         </button>
@@ -283,6 +308,9 @@
                         <div class="candidate-votes mister">
                             <i class="fas fa-star"></i>
                             <span id="votes-9">0</span> votes
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-9"></canvas>
                         </div>
                         <button class="btn btn-vote mister" onclick="openVoteModal(9, 'BANGMO Amos')">
                             <i class="fas fa-vote-yea"></i> Voter

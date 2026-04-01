@@ -485,7 +485,8 @@
         const STORAGE_KEYS = {
             votes: 'missEgem2026_votes',
             pendingVotes: 'missEgem2026_pending',
-            lastPendingCount: 'missEgem2026_lastCount'
+            lastPendingCount: 'missEgem2026_lastCount',
+            voteHistory: 'missEgem2026_history'
         };
 
         // Notification sound (base64 encoded short beep)
@@ -649,8 +650,12 @@
             if (!vote) return;
             
             const votes = getVotes();
-            votes['candidate_' + vote.candidateNumber] = (votes['candidate_' + vote.candidateNumber] || 0) + vote.votes;
+            const newTotal = (votes['candidate_' + vote.candidateNumber] || 0) + vote.votes;
+            votes['candidate_' + vote.candidateNumber] = newTotal;
             saveVotes(votes);
+            
+            // Add to vote history for chart
+            addVoteToHistory(vote.candidateNumber, newTotal);
             
             const newPending = pending.filter(function(v) { return v.id !== id; });
             savePendingVotes(newPending);
@@ -689,8 +694,12 @@
             }
             
             const votes = getVotes();
-            votes['candidate_' + candidateNum] = (votes['candidate_' + candidateNum] || 0) + voteCount;
+            const newTotal = (votes['candidate_' + candidateNum] || 0) + voteCount;
+            votes['candidate_' + candidateNum] = newTotal;
             saveVotes(votes);
+            
+            // Add to vote history for chart
+            addVoteToHistory(parseInt(candidateNum), newTotal);
             
             document.getElementById('addVotes').value = 1;
             loadStats();
@@ -703,6 +712,7 @@
                 localStorage.removeItem(STORAGE_KEYS.votes);
                 localStorage.removeItem(STORAGE_KEYS.pendingVotes);
                 localStorage.removeItem(STORAGE_KEYS.lastPendingCount);
+                localStorage.removeItem(STORAGE_KEYS.voteHistory);
                 lastKnownCount = 0;
                 loadStats();
                 loadPendingVotes();
@@ -741,6 +751,45 @@
 
         function savePendingVotes(pending) {
             localStorage.setItem(STORAGE_KEYS.pendingVotes, JSON.stringify(pending));
+        }
+
+        // Vote history for charts
+        function getVoteHistory() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEYS.voteHistory);
+                if (data) {
+                    return JSON.parse(data);
+                }
+            } catch (e) {
+                console.error('Error getting vote history:', e);
+            }
+            
+            const history = {};
+            for (let i = 1; i <= 9; i++) {
+                history['candidate_' + i] = [];
+            }
+            return history;
+        }
+
+        function addVoteToHistory(candidateNumber, totalVotes) {
+            const history = getVoteHistory();
+            const key = 'candidate_' + candidateNumber;
+            
+            if (!history[key]) {
+                history[key] = [];
+            }
+            
+            history[key].push({
+                timestamp: new Date().toISOString(),
+                votes: totalVotes
+            });
+            
+            // Keep only last 20 entries
+            if (history[key].length > 20) {
+                history[key] = history[key].slice(-20);
+            }
+            
+            localStorage.setItem(STORAGE_KEYS.voteHistory, JSON.stringify(history));
         }
 
         // Toast

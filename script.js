@@ -6,19 +6,24 @@ let currentCandidate = {
 let currentAmount = 100;
 let currentVotes = 1;
 
+// ===== CHARTS =====
+let voteCharts = {};
+
 // ===== SITE URL =====
 const SITE_URL = 'https://mev177.github.io/miss-egem-2026/';
 
 // ===== STORAGE KEYS =====
 const STORAGE_KEYS = {
     votes: 'missEgem2026_votes',
-    pendingVotes: 'missEgem2026_pending'
+    pendingVotes: 'missEgem2026_pending',
+    voteHistory: 'missEgem2026_history'
 };
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
     initMobileMenu();
     initShareButtons();
+    initCharts();
     loadVotes();
 });
 
@@ -275,6 +280,167 @@ function savePendingVote(vote) {
     } catch (e) {
         console.error('Error saving pending vote:', e);
     }
+}
+
+// ===== CHARTS INITIALIZATION =====
+function initCharts() {
+    const chartColors = {
+        miss: {
+            line: '#c41e3a',
+            fill: 'rgba(196, 30, 58, 0.2)'
+        },
+        mister: {
+            line: '#d4a017',
+            fill: 'rgba(212, 160, 23, 0.2)'
+        }
+    };
+
+    for (let i = 1; i <= 9; i++) {
+        const canvas = document.getElementById('chart-' + i);
+        if (canvas) {
+            const isMister = i >= 5;
+            const colors = isMister ? chartColors.mister : chartColors.miss;
+            
+            const ctx = canvas.getContext('2d');
+            voteCharts[i] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Votes',
+                        data: [],
+                        borderColor: colors.line,
+                        backgroundColor: colors.fill,
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointBackgroundColor: colors.line
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#1a1a1a',
+                            titleColor: '#d4a017',
+                            bodyColor: '#fff',
+                            borderColor: '#d4a017',
+                            borderWidth: 1
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: false
+                        },
+                        y: {
+                            display: false,
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+    
+    // Load history and update charts
+    loadVoteHistory();
+}
+
+// ===== VOTE HISTORY =====
+function getVoteHistory() {
+    try {
+        const data = localStorage.getItem(STORAGE_KEYS.voteHistory);
+        if (data) {
+            return JSON.parse(data);
+        }
+    } catch (e) {
+        console.error('Error getting vote history:', e);
+    }
+    
+    // Initialize empty history for all candidates
+    const history = {};
+    for (let i = 1; i <= 9; i++) {
+        history['candidate_' + i] = [];
+    }
+    return history;
+}
+
+function saveVoteHistory(history) {
+    try {
+        localStorage.setItem(STORAGE_KEYS.voteHistory, JSON.stringify(history));
+    } catch (e) {
+        console.error('Error saving vote history:', e);
+    }
+}
+
+function loadVoteHistory() {
+    const history = getVoteHistory();
+    
+    for (let i = 1; i <= 9; i++) {
+        const candidateHistory = history['candidate_' + i] || [];
+        if (voteCharts[i] && candidateHistory.length > 0) {
+            const labels = candidateHistory.map(function(entry) {
+                return formatDate(entry.timestamp);
+            });
+            const data = candidateHistory.map(function(entry) {
+                return entry.votes;
+            });
+            
+            voteCharts[i].data.labels = labels;
+            voteCharts[i].data.datasets[0].data = data;
+            voteCharts[i].update();
+        }
+    }
+}
+
+function addVoteToHistory(candidateNumber, totalVotes) {
+    const history = getVoteHistory();
+    const key = 'candidate_' + candidateNumber;
+    
+    if (!history[key]) {
+        history[key] = [];
+    }
+    
+    // Add new data point
+    history[key].push({
+        timestamp: new Date().toISOString(),
+        votes: totalVotes
+    });
+    
+    // Keep only last 20 entries
+    if (history[key].length > 20) {
+        history[key] = history[key].slice(-20);
+    }
+    
+    saveVoteHistory(history);
+    
+    // Update chart
+    if (voteCharts[candidateNumber]) {
+        const labels = history[key].map(function(entry) {
+            return formatDate(entry.timestamp);
+        });
+        const data = history[key].map(function(entry) {
+            return entry.votes;
+        });
+        
+        voteCharts[candidateNumber].data.labels = labels;
+        voteCharts[candidateNumber].data.datasets[0].data = data;
+        voteCharts[candidateNumber].update();
+    }
+}
+
+function formatDate(isoString) {
+    const date = new Date(isoString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const hours = date.getHours().toString().padStart(2, '0');
+    const mins = date.getMinutes().toString().padStart(2, '0');
+    return day + '/' + month + ' ' + hours + ':' + mins;
 }
 
 // ===== HELPER: Get votes from storage =====
