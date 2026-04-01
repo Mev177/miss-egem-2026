@@ -162,9 +162,9 @@ function selectPayment(method) {
     
     if (method === 'orange') {
         document.getElementById('selectedOperator').textContent = 'Orange Money';
-        document.getElementById('selectedNumber').textContent = '659 68 87 59';
-        document.getElementById('selectedName').textContent = 'DJENGUE Yassine';
-        document.getElementById('selectedUssd').innerHTML = 'Tapez <strong>#150#</strong> → Transfert → <span id="ussdAmount">' + currentAmount + '</span> FCFA';
+        document.getElementById('selectedNumber').textContent = '983650';
+        document.getElementById('selectedName').textContent = 'ASECK LYDIA';
+        document.getElementById('selectedUssd').innerHTML = 'Tapez <strong>#150*47*983650*' + currentAmount + '#</strong>';
     } else {
         document.getElementById('selectedOperator').textContent = 'MTN Mobile Money';
         document.getElementById('selectedNumber').textContent = '683 68 55 81';
@@ -174,7 +174,7 @@ function selectPayment(method) {
 }
 
 function copySelectedNumber() {
-    const number = selectedPaymentMethod === 'orange' ? '659688759' : '683685581';
+    const number = selectedPaymentMethod === 'orange' ? '983650' : '683685581';
     copyToClipboard(number);
     showToast('Numéro copié !');
 }
