@@ -1,3 +1,18 @@
+// ===== FIREBASE CONFIGURATION =====
+const firebaseConfig = {
+    apiKey: "AIzaSyDPQmzrglLhI6Q7TT_5_9TGxUGkf0Wubqk",
+    authDomain: "miss-egem-2026-8b880.firebaseapp.com",
+    databaseURL: "https://miss-egem-2026-8b880-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "miss-egem-2026-8b880",
+    storageBucket: "miss-egem-2026-8b880.firebasestorage.app",
+    messagingSenderId: "27908518692",
+    appId: "1:27908518692:web:620e674927e706fad339b1"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
 // ===== GLOBAL STATE =====
 let currentCandidate = {
     number: 0,
@@ -12,19 +27,12 @@ let voteCharts = {};
 // ===== SITE URL =====
 const SITE_URL = 'https://mev177.github.io/miss-egem-2026/';
 
-// ===== STORAGE KEYS =====
-const STORAGE_KEYS = {
-    votes: 'missEgem2026_votes',
-    pendingVotes: 'missEgem2026_pending',
-    voteHistory: 'missEgem2026_history'
-};
-
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
     initMobileMenu();
     initShareButtons();
     initCharts();
-    loadVotes();
+    loadVotesFromFirebase();
 });
 
 // ===== MOBILE MENU =====
@@ -45,7 +53,6 @@ function initMobileMenu() {
             }
         });
 
-        // Close menu on link click
         const mobileLinks = mobileMenu.querySelectorAll('.mobile-link');
         mobileLinks.forEach(function(link) {
             link.addEventListener('click', function() {
@@ -61,25 +68,21 @@ function initMobileMenu() {
 function initShareButtons() {
     const message = "🗳️ Votez pour vos favoris à MISS & MISTER EGEM 2026 ! 100 FCFA = 1 vote " + SITE_URL;
     
-    // WhatsApp Share
     const whatsappBtn = document.getElementById('shareWhatsapp');
     if (whatsappBtn) {
         whatsappBtn.href = 'https://wa.me/?text=' + encodeURIComponent(message);
     }
     
-    // Success modal WhatsApp
     const successWhatsapp = document.getElementById('successWhatsapp');
     if (successWhatsapp) {
         successWhatsapp.href = 'https://wa.me/?text=' + encodeURIComponent(message);
     }
     
-    // Facebook Share
     const facebookBtn = document.getElementById('shareFacebook');
     if (facebookBtn) {
         facebookBtn.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(SITE_URL);
     }
     
-    // Copy Link
     const copyBtn = document.getElementById('copyLink');
     if (copyBtn) {
         copyBtn.addEventListener('click', function() {
@@ -96,17 +99,14 @@ function openVoteModal(number, name) {
     currentAmount = 100;
     currentVotes = 1;
     
-    // Update modal content
     document.getElementById('modalCandidateName').textContent = name;
     document.getElementById('modalCandidateNumber').textContent = number;
     document.getElementById('voteAmount').value = 100;
     document.getElementById('votesPreview').textContent = '1';
     document.getElementById('motifText').textContent = 'MISS ' + number;
     
-    // Show step 1
     showStep(1);
     
-    // Show modal
     document.getElementById('voteModal').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -137,13 +137,11 @@ function goToStep2() {
     currentAmount = amount;
     currentVotes = Math.floor(amount / 100);
     
-    // Update step 2 content
     document.getElementById('step2Amount').textContent = amount;
     document.getElementById('step2Votes').textContent = currentVotes;
     document.getElementById('amountDisplay').textContent = amount;
     document.getElementById('ussdAmount').textContent = amount;
     
-    // Reset payment selection
     document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
     document.getElementById('paymentDetails').style.display = 'none';
     
@@ -154,15 +152,11 @@ function goToStep2() {
 let selectedPaymentMethod = null;
 
 function selectPayment(method) {
-    // Remove selected class from all
     document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
-    
-    // Add selected class to chosen method
     document.querySelector('.payment-method.' + method).classList.add('selected');
     
     selectedPaymentMethod = method;
     
-    // Show payment details
     const details = document.getElementById('paymentDetails');
     details.style.display = 'block';
     
@@ -186,7 +180,6 @@ function copySelectedNumber() {
 }
 
 function goToStep3() {
-    // Update summary
     document.getElementById('summaryCandidate').textContent = currentCandidate.name + ' (N°' + currentCandidate.number + ')';
     document.getElementById('summaryAmount').textContent = currentAmount + ' FCFA';
     document.getElementById('summaryVotes').textContent = currentVotes + ' vote(s)';
@@ -208,7 +201,6 @@ function setAmount(amount) {
     document.getElementById('voteAmount').value = amount;
     updateVotes();
     
-    // Update active button
     document.querySelectorAll('.quick-amounts button').forEach(btn => {
         btn.classList.remove('active');
         const btnAmount = parseInt(btn.textContent.replace('K', '000').replace(/[^0-9]/g, ''));
@@ -234,7 +226,6 @@ function copyToClipboard(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text);
     } else {
-        // Fallback for older browsers
         const textarea = document.createElement('textarea');
         textarea.value = text;
         textarea.style.position = 'fixed';
@@ -260,7 +251,7 @@ function showToast(message) {
     }, 2500);
 }
 
-// ===== SUBMIT VOTE =====
+// ===== SUBMIT VOTE TO FIREBASE =====
 function submitVote() {
     const phone = document.getElementById('voterPhone').value.trim();
     
@@ -271,64 +262,49 @@ function submitVote() {
     
     // Create pending vote
     const pendingVote = {
-        id: Date.now(),
         candidateNumber: currentCandidate.number,
         candidateName: currentCandidate.name,
         amount: currentAmount,
         votes: currentVotes,
         phone: phone,
+        paymentMethod: selectedPaymentMethod,
         timestamp: new Date().toISOString(),
         status: 'pending'
     };
     
-    // Save to pending votes
-    savePendingVote(pendingVote);
-    
-    // Close vote modal
-    closeVoteModal();
-    
-    // Clear phone input
-    document.getElementById('voterPhone').value = '';
-    
-    // Show success modal
-    document.getElementById('successModal').classList.add('active');
+    // Save to Firebase
+    database.ref('pendingVotes').push(pendingVote)
+        .then(function() {
+            closeVoteModal();
+            document.getElementById('voterPhone').value = '';
+            document.getElementById('successModal').classList.add('active');
+            showToast('Vote enregistré ! En attente de validation.');
+        })
+        .catch(function(error) {
+            console.error('Erreur:', error);
+            alert('Erreur lors de l\'enregistrement. Veuillez réessayer.');
+        });
 }
 
 function closeSuccessModal() {
     document.getElementById('successModal').classList.remove('active');
 }
 
-// ===== LOCAL STORAGE FUNCTIONS =====
-function loadVotes() {
-    try {
-        const votesData = localStorage.getItem(STORAGE_KEYS.votes);
-        if (votesData) {
-            const votes = JSON.parse(votesData);
-            for (let i = 1; i <= 9; i++) {
-                const voteCount = votes['candidate_' + i] || 0;
-                const element = document.getElementById('votes-' + i);
-                if (element) {
-                    element.textContent = voteCount;
-                }
+// ===== FIREBASE: LOAD VOTES IN REAL-TIME =====
+function loadVotesFromFirebase() {
+    // Listen for confirmed votes in real-time
+    database.ref('confirmedVotes').on('value', function(snapshot) {
+        const votes = snapshot.val() || {};
+        
+        // Update all candidate vote counts
+        for (let i = 1; i <= 20; i++) {
+            const voteCount = votes['candidate_' + i] || 0;
+            const element = document.getElementById('votes-' + i);
+            if (element) {
+                element.textContent = voteCount;
             }
         }
-    } catch (e) {
-        console.error('Error loading votes:', e);
-    }
-}
-
-function savePendingVote(vote) {
-    try {
-        let pending = [];
-        const data = localStorage.getItem(STORAGE_KEYS.pendingVotes);
-        if (data) {
-            pending = JSON.parse(data);
-        }
-        pending.push(vote);
-        localStorage.setItem(STORAGE_KEYS.pendingVotes, JSON.stringify(pending));
-    } catch (e) {
-        console.error('Error saving pending vote:', e);
-    }
+    });
 }
 
 // ===== CHARTS INITIALIZATION =====
@@ -344,10 +320,10 @@ function initCharts() {
         }
     };
 
-    for (let i = 1; i <= 9; i++) {
+    for (let i = 1; i <= 20; i++) {
         const canvas = document.getElementById('chart-' + i);
         if (canvas) {
-            const isMister = i >= 5;
+            const isMister = i >= 10;
             const colors = isMister ? chartColors.mister : chartColors.miss;
             
             const ctx = canvas.getContext('2d');
@@ -395,92 +371,6 @@ function initCharts() {
             });
         }
     }
-    
-    // Load history and update charts
-    loadVoteHistory();
-}
-
-// ===== VOTE HISTORY =====
-function getVoteHistory() {
-    try {
-        const data = localStorage.getItem(STORAGE_KEYS.voteHistory);
-        if (data) {
-            return JSON.parse(data);
-        }
-    } catch (e) {
-        console.error('Error getting vote history:', e);
-    }
-    
-    // Initialize empty history for all candidates
-    const history = {};
-    for (let i = 1; i <= 9; i++) {
-        history['candidate_' + i] = [];
-    }
-    return history;
-}
-
-function saveVoteHistory(history) {
-    try {
-        localStorage.setItem(STORAGE_KEYS.voteHistory, JSON.stringify(history));
-    } catch (e) {
-        console.error('Error saving vote history:', e);
-    }
-}
-
-function loadVoteHistory() {
-    const history = getVoteHistory();
-    
-    for (let i = 1; i <= 9; i++) {
-        const candidateHistory = history['candidate_' + i] || [];
-        if (voteCharts[i] && candidateHistory.length > 0) {
-            const labels = candidateHistory.map(function(entry) {
-                return formatDate(entry.timestamp);
-            });
-            const data = candidateHistory.map(function(entry) {
-                return entry.votes;
-            });
-            
-            voteCharts[i].data.labels = labels;
-            voteCharts[i].data.datasets[0].data = data;
-            voteCharts[i].update();
-        }
-    }
-}
-
-function addVoteToHistory(candidateNumber, totalVotes) {
-    const history = getVoteHistory();
-    const key = 'candidate_' + candidateNumber;
-    
-    if (!history[key]) {
-        history[key] = [];
-    }
-    
-    // Add new data point
-    history[key].push({
-        timestamp: new Date().toISOString(),
-        votes: totalVotes
-    });
-    
-    // Keep only last 20 entries
-    if (history[key].length > 20) {
-        history[key] = history[key].slice(-20);
-    }
-    
-    saveVoteHistory(history);
-    
-    // Update chart
-    if (voteCharts[candidateNumber]) {
-        const labels = history[key].map(function(entry) {
-            return formatDate(entry.timestamp);
-        });
-        const data = history[key].map(function(entry) {
-            return entry.votes;
-        });
-        
-        voteCharts[candidateNumber].data.labels = labels;
-        voteCharts[candidateNumber].data.datasets[0].data = data;
-        voteCharts[candidateNumber].update();
-    }
 }
 
 function formatDate(isoString) {
@@ -491,49 +381,3 @@ function formatDate(isoString) {
     const mins = date.getMinutes().toString().padStart(2, '0');
     return day + '/' + month + ' ' + hours + ':' + mins;
 }
-
-// ===== HELPER: Get votes from storage =====
-function getVotes() {
-    try {
-        const data = localStorage.getItem(STORAGE_KEYS.votes);
-        if (data) {
-            return JSON.parse(data);
-        }
-    } catch (e) {
-        console.error('Error getting votes:', e);
-    }
-    return {
-        candidate_1: 0,
-        candidate_2: 0,
-        candidate_3: 0,
-        candidate_4: 0
-    };
-}
-
-// ===== HELPER: Save votes to storage =====
-function saveVotes(votes) {
-    try {
-        localStorage.setItem(STORAGE_KEYS.votes, JSON.stringify(votes));
-    } catch (e) {
-        console.error('Error saving votes:', e);
-    }
-}
-
-// ===== Detect Mobile OS for payment links =====
-function getMobileOS() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    
-    if (/android/i.test(userAgent)) {
-        return 'android';
-    }
-    
-    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        return 'ios';
-    }
-    
-    return 'unknown';
-}
-
-// Info: Les liens tel: pour les USSD fonctionnent automatiquement sur Android et iOS
-// Orange Money: tel:*150*1*1*659688759# 
-// MTN MoMo: tel:*126*1*1*683685581#

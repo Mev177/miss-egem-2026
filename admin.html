@@ -14,10 +14,12 @@
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
             font-family: 'Poppins', sans-serif;
-            background: #f0f2f5;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
+            color: #fff;
         }
         
         /* Login Screen */
@@ -27,928 +29,598 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
         }
+        
         .login-overlay.hidden {
             display: none;
         }
+        
         .login-box {
-            background: #fff;
+            background: rgba(255,255,255,0.05);
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 1px solid rgba(212, 160, 23, 0.3);
             text-align: center;
             max-width: 400px;
             width: 90%;
         }
+        
         .login-box .logo {
             font-size: 3rem;
             color: #d4a017;
-            margin-bottom: 10px;
-        }
-        .login-box h2 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .login-box p {
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 0.9rem;
-        }
-        .login-input {
-            width: 100%;
-            padding: 15px 20px;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .login-input:focus {
-            border-color: #d4a017;
-            outline: none;
-        }
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #c41e3a, #d32f2f);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .login-btn:hover {
-            transform: translateY(-2px);
-        }
-        .login-btn:active {
-            transform: scale(0.98);
-        }
-        .login-error {
-            color: #dc3545;
-            font-size: 0.9rem;
-            margin-top: 15px;
-            display: none;
-        }
-        .login-error.show {
-            display: block;
-        }
-        .admin-content {
-            display: none;
-        }
-        .admin-content.visible {
-            display: block;
+            margin-bottom: 1rem;
         }
         
-        .header {
-            background: linear-gradient(135deg, #333, #555);
-            color: white;
-            padding: 20px;
-            text-align: center;
+        .login-box h2 {
+            margin-bottom: 2rem;
+            color: #d4a017;
         }
-        .header h1 {
-            font-size: 1.5rem;
+        
+        .login-box input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            border-radius: 10px;
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 1rem;
         }
-        .header a {
-            color: #ffc107;
-            text-decoration: none;
+        
+        .login-box input::placeholder {
+            color: #888;
         }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .section {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .section-title {
-            font-size: 1.2rem;
+        
+        .login-box button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #d4a017, #f4c430);
+            border: none;
+            border-radius: 10px;
+            color: #1a1a2e;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-box button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(212, 160, 23, 0.4);
+        }
+        
+        .login-error {
+            color: #dc3545;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(212, 160, 23, 0.3);
+        }
+        
+        .logo-header {
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #333;
-        }
-        .section-title i {
-            color: #b71c1c;
+            color: #d4a017;
+            font-weight: 700;
+            font-size: 1.2rem;
         }
         
-        /* Candidates Stats */
-        .candidates-stats {
+        .back-btn {
+            color: #d4a017;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: 1px solid #d4a017;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: #d4a017;
+            color: #1a1a2e;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Stats */
+        .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-        .stat-card {
-            background: linear-gradient(135deg, #b71c1c, #c62828);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-        }
-        .stat-card h3 {
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-            opacity: 0.9;
-        }
-        .stat-card .number {
-            font-size: 2rem;
-            font-weight: 700;
-        }
-        .stat-card .name {
-            font-size: 0.85rem;
-            margin-top: 5px;
-            opacity: 0.9;
-        }
-        .stat-card.mister {
-            background: linear-gradient(135deg, #1565c0, #1976d2);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
         
-        /* Pending Votes */
-        .pending-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(212, 160, 23, 0.2);
         }
-        .pending-item {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
+        
+        .stat-card i {
+            font-size: 2rem;
+            color: #d4a017;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d4a017;
+        }
+        
+        .stat-label {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #d4a017;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Pending votes */
+        .pending-votes {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(212, 160, 23, 0.2);
+        }
+        
+        .vote-item {
+            background: rgba(0,0,0,0.3);
             border-radius: 12px;
-            padding: 15px;
+            padding: 1rem;
+            margin-bottom: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 1rem;
         }
-        .pending-info {
+        
+        .vote-info {
             flex: 1;
             min-width: 200px;
         }
-        .pending-info strong {
-            display: block;
-            font-size: 1rem;
-            color: #333;
+        
+        .vote-candidate {
+            font-weight: 600;
+            color: #d4a017;
+            font-size: 1.1rem;
         }
-        .pending-info span {
-            font-size: 0.85rem;
-            color: #666;
+        
+        .vote-details {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 4px;
         }
-        .pending-actions {
+        
+        .vote-details span {
+            margin-right: 15px;
+        }
+        
+        .vote-actions {
             display: flex;
             gap: 10px;
         }
+        
         .btn {
             padding: 10px 20px;
             border: none;
             border-radius: 8px;
+            cursor: pointer;
             font-family: 'Poppins', sans-serif;
             font-weight: 500;
-            cursor: pointer;
-            display: inline-flex;
+            transition: all 0.3s;
+            display: flex;
             align-items: center;
             gap: 8px;
-            transition: transform 0.2s;
         }
-        .btn:active {
-            transform: scale(0.95);
-        }
-        .btn-success {
-            background: #28a745;
+        
+        .btn-validate {
+            background: linear-gradient(135deg, #28a745, #20c997);
             color: white;
         }
-        .btn-danger {
-            background: #dc3545;
+        
+        .btn-validate:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+        
+        .btn-reject {
+            background: linear-gradient(135deg, #dc3545, #c82333);
             color: white;
         }
-        .btn-primary {
-            background: #b71c1c;
-            color: white;
+        
+        .btn-reject:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
         }
+        
+        .btn-validate-all {
+            background: linear-gradient(135deg, #d4a017, #f4c430);
+            color: #1a1a2e;
+            font-size: 1rem;
+            padding: 12px 24px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-validate-all:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(212, 160, 23, 0.4);
+        }
+        
         .empty-state {
             text-align: center;
-            color: #666;
-            padding: 40px;
+            padding: 3rem;
+            color: #888;
         }
+        
         .empty-state i {
-            font-size: 3rem;
-            color: #ddd;
-            margin-bottom: 15px;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #444;
         }
         
-        /* Manual Add */
-        .add-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            align-items: end;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .form-group label {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #555;
-        }
-        .form-group select, .form-group input {
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-        }
-        .form-group select:focus, .form-group input:focus {
-            border-color: #e91e63;
-            outline: none;
-        }
-        
-        /* Actions Section */
-        .actions-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-        
-        /* Toast */
         .toast {
             position: fixed;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: #28a745;
             color: white;
-            padding: 15px 30px;
-            border-radius: 25px;
-            opacity: 0;
-            transition: all 0.3s;
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s;
             z-index: 1000;
         }
+        
         .toast.show {
-            opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
         
-        /* Notification Badge */
-        .notification-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #dc3545;
-            color: white;
-            min-width: 24px;
-            height: 24px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-left: 10px;
-            padding: 0 8px;
-            animation: pulse-badge 2s infinite;
-        }
-        .notification-badge.hidden {
-            display: none;
-        }
-        @keyframes pulse-badge {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-        
-        /* Notification Bell */
-        .notification-bell {
-            position: relative;
-            cursor: pointer;
-            font-size: 1.5rem;
-            margin-left: 15px;
-        }
-        .notification-bell.ringing {
-            animation: ring 0.5s ease-in-out;
-        }
-        @keyframes ring {
-            0%, 100% { transform: rotate(0); }
-            25% { transform: rotate(20deg); }
-            50% { transform: rotate(-20deg); }
-            75% { transform: rotate(10deg); }
-        }
-        
-        /* Notification Banner */
-        .notification-banner {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            padding: 15px 20px;
+        .loading {
             text-align: center;
-            z-index: 2000;
-            transform: translateY(-100%);
-            transition: transform 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        .notification-banner.show {
-            transform: translateY(0);
-        }
-        .notification-banner button {
-            background: white;
-            color: #28a745;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            cursor: pointer;
+            padding: 2rem;
+            color: #888;
         }
         
-        /* Status indicator */
-        .status-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: #28a745;
-            margin-left: 15px;
-        }
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background: #28a745;
-            border-radius: 50%;
-            animation: blink 2s infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        .loading i {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
         }
         
-        @media (max-width: 600px) {
-            .pending-item {
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
                 flex-direction: column;
-                align-items: stretch;
+                gap: 1rem;
             }
-            .pending-actions {
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .vote-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .vote-actions {
+                width: 100%;
+            }
+            
+            .vote-actions .btn {
+                flex: 1;
                 justify-content: center;
-            }
-            .add-form {
-                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
+    <!-- Login Overlay -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
             <div class="logo"><i class="fas fa-crown"></i></div>
-            <h2>Administration</h2>
-            <p>MISS & MISTER EGEM 2026</p>
-            <input type="password" class="login-input" id="loginPassword" placeholder="Mot de passe" onkeypress="if(event.key==='Enter')checkLogin()">
-            <button class="login-btn" onclick="checkLogin()">
-                <i class="fas fa-lock"></i> Se connecter
-            </button>
+            <h2>Admin MISS-EGEM 2026</h2>
             <p class="login-error" id="loginError">Mot de passe incorrect</p>
+            <input type="password" id="adminPassword" placeholder="Mot de passe admin" onkeypress="if(event.key==='Enter') checkPassword()">
+            <button onclick="checkPassword()">
+                <i class="fas fa-sign-in-alt"></i> Connexion
+            </button>
         </div>
     </div>
-
-    <div class="admin-content" id="adminContent">
-    <!-- Notification Banner -->
-    <div class="notification-banner" id="notifBanner">
-        <i class="fas fa-bell"></i>
-        <span id="notifBannerText">Nouveau vote en attente !</span>
-        <button onclick="hideNotifBanner()">Voir</button>
-    </div>
-
-    <header class="header">
-        <h1>
-            <i class="fas fa-cog"></i> Admin - MISS & MISTER EGEM 2026
-            <span class="notification-badge hidden" id="pendingBadge">0</span>
-            <span class="notification-bell" id="notifBell" onclick="requestNotifPermission()">
-                <i class="fas fa-bell"></i>
-            </span>
-        </h1>
-        <p>
-            <a href="index.html"><i class="fas fa-arrow-left"></i> Retour au site</a>
-            <span style="margin: 0 15px;">|</span>
-            <a href="#" onclick="logout(); return false;" style="color: #ff6b6b;"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-            <span class="status-indicator">
-                <span class="status-dot"></span>
-                Auto-refresh actif
-            </span>
-        </p>
-    </header>
-
-    <div class="container">
-        <!-- Candidates Stats -->
-        <div class="section">
-            <h2 class="section-title">
-                <i class="fas fa-female"></i> Votes MISS
-            </h2>
-            <div class="candidates-stats">
+    
+    <!-- Main Content -->
+    <div id="adminContent" style="display: none;">
+        <header class="header">
+            <div class="logo-header">
+                <i class="fas fa-crown"></i>
+                <span>Admin - MISS & MISTER EGEM 2026</span>
+            </div>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Retour au site
+            </a>
+        </header>
+        
+        <div class="container">
+            <!-- Stats -->
+            <div class="stats-grid">
                 <div class="stat-card">
-                    <h3>N°1</h3>
-                    <div class="number" id="stat-1">0</div>
-                    <div class="name">EBI ONGONO</div>
+                    <i class="fas fa-clock"></i>
+                    <div class="stat-value" id="pendingCount">0</div>
+                    <div class="stat-label">Votes en attente</div>
                 </div>
                 <div class="stat-card">
-                    <h3>N°2</h3>
-                    <div class="number" id="stat-2">0</div>
-                    <div class="name">KOLNIKIE FLEUR</div>
+                    <i class="fas fa-check-circle"></i>
+                    <div class="stat-value" id="validatedCount">0</div>
+                    <div class="stat-label">Votes validés</div>
                 </div>
                 <div class="stat-card">
-                    <h3>N°3</h3>
-                    <div class="number" id="stat-3">0</div>
-                    <div class="name">NGA NNANG</div>
+                    <i class="fas fa-coins"></i>
+                    <div class="stat-value" id="totalAmount">0</div>
+                    <div class="stat-label">FCFA Total</div>
                 </div>
                 <div class="stat-card">
-                    <h3>N°4</h3>
-                    <div class="number" id="stat-4">0</div>
-                    <div class="name">MOUKAM Merciale</div>
+                    <i class="fas fa-vote-yea"></i>
+                    <div class="stat-value" id="totalVotes">0</div>
+                    <div class="stat-label">Votes totaux</div>
                 </div>
             </div>
-        </div>
-
-        <!-- MISTER Stats -->
-        <div class="section">
+            
+            <!-- Pending Votes -->
             <h2 class="section-title">
-                <i class="fas fa-male"></i> Votes MISTER
+                <i class="fas fa-hourglass-half"></i>
+                Votes en attente de validation
             </h2>
-            <div class="candidates-stats mister-stats">
-                <div class="stat-card mister">
-                    <h3>N°1</h3>
-                    <div class="number" id="stat-5">0</div>
-                    <div class="name">YOMBI BOUTIFIN Jean</div>
+            
+            <button class="btn btn-validate-all" onclick="validateAllVotes()" id="validateAllBtn" style="display: none;">
+                <i class="fas fa-check-double"></i>
+                Valider tous les votes
+            </button>
+            
+            <div class="pending-votes" id="pendingVotesList">
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Chargement des votes...</p>
                 </div>
-                <div class="stat-card mister">
-                    <h3>N°2</h3>
-                    <div class="number" id="stat-6">0</div>
-                    <div class="name">MBAMA ASSANGA</div>
-                </div>
-                <div class="stat-card mister">
-                    <h3>N°3</h3>
-                    <div class="number" id="stat-7">0</div>
-                    <div class="name">NTIEGE EWANE</div>
-                </div>
-                <div class="stat-card mister">
-                    <h3>N°4</h3>
-                    <div class="number" id="stat-8">0</div>
-                    <div class="name">KEUBOU</div>
-                </div>
-                <div class="stat-card mister">
-                    <h3>N°5</h3>
-                    <div class="number" id="stat-9">0</div>
-                    <div class="name">BANGMO Amos</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pending Votes -->
-        <div class="section">
-            <h2 class="section-title">
-                <i class="fas fa-hourglass-half"></i> Votes en attente
-            </h2>
-            <div class="pending-list" id="pendingList">
-                <div class="empty-state">
-                    <i class="fas fa-inbox"></i>
-                    <p>Aucun vote en attente</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Manual Add -->
-        <div class="section">
-            <h2 class="section-title">
-                <i class="fas fa-plus-circle"></i> Ajouter des votes manuellement
-            </h2>
-            <div class="add-form">
-                <div class="form-group">
-                    <label>Candidat(e)</label>
-                    <select id="addCandidate">
-                        <optgroup label="MISS">
-                            <option value="1">Miss N°1 - EBI ONGONO</option>
-                            <option value="2">Miss N°2 - KOLNIKIE FLEUR</option>
-                            <option value="3">Miss N°3 - NGA NNANG</option>
-                            <option value="4">Miss N°4 - MOUKAM Merciale</option>
-                        </optgroup>
-                        <optgroup label="MISTER">
-                            <option value="5">Mister N°1 - YOMBI BOUTIFIN Jean</option>
-                            <option value="6">Mister N°2 - MBAMA ASSANGA</option>
-                            <option value="7">Mister N°3 - NTIEGE EWANE</option>
-                            <option value="8">Mister N°4 - KEUBOU</option>
-                            <option value="9">Mister N°5 - BANGMO Amos</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Nombre de votes</label>
-                    <input type="number" id="addVotes" min="1" value="1">
-                </div>
-                <div class="form-group">
-                    <label>&nbsp;</label>
-                    <button class="btn btn-primary" onclick="addManualVotes()">
-                        <i class="fas fa-plus"></i> Ajouter
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Actions -->
-        <div class="section">
-            <h2 class="section-title">
-                <i class="fas fa-tools"></i> Actions
-            </h2>
-            <div class="actions-row">
-                <button class="btn btn-danger" onclick="resetAllVotes()">
-                    <i class="fas fa-trash"></i> Remettre à zéro
-                </button>
-                <button class="btn btn-primary" onclick="location.reload()">
-                    <i class="fas fa-sync"></i> Actualiser
-                </button>
             </div>
         </div>
     </div>
-    </div> <!-- End admin-content -->
-
-    <div class="toast" id="toast">Action effectuée !</div>
-
+    
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Vote validé !</span>
+    </div>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    
     <script>
-        // Admin password (hashed)
-        const ADMIN_HASH = 'a1b2c3d4e5f6'; // Simple obfuscation
-        const CORRECT_PASS = 'Yassine2026';
+        // Admin password - CHANGEZ CE MOT DE PASSE !
+        const ADMIN_PASSWORD = 'egem2026';
         
-        // Check if already logged in
-        function checkSession() {
-            const session = sessionStorage.getItem('adminSession');
-            if (session === 'authenticated') {
-                showAdmin();
-            }
-        }
-        
-        // Check login
-        function checkLogin() {
-            const password = document.getElementById('loginPassword').value;
-            if (password === CORRECT_PASS) {
-                sessionStorage.setItem('adminSession', 'authenticated');
-                showAdmin();
-            } else {
-                document.getElementById('loginError').classList.add('show');
-                document.getElementById('loginPassword').value = '';
-                setTimeout(function() {
-                    document.getElementById('loginError').classList.remove('show');
-                }, 3000);
-            }
-        }
-        
-        // Show admin panel
-        function showAdmin() {
-            document.getElementById('loginOverlay').classList.add('hidden');
-            document.getElementById('adminContent').classList.add('visible');
-        }
-        
-        // Logout
-        function logout() {
-            sessionStorage.removeItem('adminSession');
-            location.reload();
-        }
-        
-        // Check session on load
-        checkSession();
-        
-        // Storage keys
-        const STORAGE_KEYS = {
-            votes: 'missEgem2026_votes',
-            pendingVotes: 'missEgem2026_pending',
-            lastPendingCount: 'missEgem2026_lastCount',
-            voteHistory: 'missEgem2026_history'
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPQmzrglLhI6Q7TT_5_9TGxUGkf0Wubqk",
+            authDomain: "miss-egem-2026-8b880.firebaseapp.com",
+            databaseURL: "https://miss-egem-2026-8b880-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "miss-egem-2026-8b880",
+            storageBucket: "miss-egem-2026-8b880.firebasestorage.app",
+            messagingSenderId: "27908518692",
+            appId: "1:27908518692:web:620e674927e706fad339b1"
         };
-
-        // Notification sound (base64 encoded short beep)
-        const notifSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJOrnJh6aGN+ubG0pIl3cYaWlIp5aWN0hpGRi31waW6Ai5KSjoF1cHSBioyLh3t0dHuCh4mIhXx3eH2Dh4iGgnt4en+Eh4eGgXt5fIGFhoaDfnt8gISFhYOAfX2Bg4SEg4F+fn+BgYKCgX9+f4GBgoKBf35/gIGBgYF/fn+AgIGBgIB/f4CAgYGAgH9/gICAgICAf3+AgICAgIB/f4CAgICAgH9/gICAgICAf3+AgICAgIB/f4CAgA==');
         
-        let lastKnownCount = 0;
-        let notifPermission = false;
-
-        // Init
-        document.addEventListener('DOMContentLoaded', function() {
-            loadStats();
-            loadPendingVotes();
-            updateBadge();
-            
-            // Get last known count
-            const stored = localStorage.getItem(STORAGE_KEYS.lastPendingCount);
-            lastKnownCount = stored ? parseInt(stored) : getPendingVotes().length;
-            
-            // Check for notification permission
-            if ('Notification' in window) {
-                notifPermission = Notification.permission === 'granted';
-            }
-            
-            // Auto-refresh every 10 seconds
-            setInterval(checkForNewVotes, 10000);
-        });
-
-        // Check for new votes
-        function checkForNewVotes() {
-            const pending = getPendingVotes();
-            const currentCount = pending.length;
-            
-            if (currentCount > lastKnownCount) {
-                // New vote detected!
-                const newVotes = currentCount - lastKnownCount;
-                triggerNotification(newVotes, pending[pending.length - 1]);
-            }
-            
-            lastKnownCount = currentCount;
-            localStorage.setItem(STORAGE_KEYS.lastPendingCount, currentCount.toString());
-            
-            // Refresh display
-            loadStats();
-            loadPendingVotes();
-            updateBadge();
-        }
-
-        // Trigger notification
-        function triggerNotification(count, vote) {
-            // Play sound
-            notifSound.play().catch(function() {});
-            
-            // Ring the bell
-            const bell = document.getElementById('notifBell');
-            bell.classList.add('ringing');
-            setTimeout(function() { bell.classList.remove('ringing'); }, 500);
-            
-            // Show banner
-            const banner = document.getElementById('notifBanner');
-            document.getElementById('notifBannerText').textContent = 
-                count + ' nouveau(x) vote(s) en attente !';
-            banner.classList.add('show');
-            
-            // Browser notification
-            if (notifPermission && 'Notification' in window) {
-                new Notification('MISS & MISTER EGEM 2026', {
-                    body: 'Nouveau vote pour ' + vote.candidateName + ' (' + vote.amount + ' FCFA)',
-                    icon: 'https://mev177.github.io/miss-egem-2026/candidate%20n%C2%B01.jpeg'
-                });
-            }
-            
-            // Vibrate on mobile
-            if ('vibrate' in navigator) {
-                navigator.vibrate([200, 100, 200]);
-            }
-        }
-
-        // Update notification badge
-        function updateBadge() {
-            const pending = getPendingVotes();
-            const badge = document.getElementById('pendingBadge');
-            
-            if (pending.length > 0) {
-                badge.textContent = pending.length;
-                badge.classList.remove('hidden');
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
+        let pendingVotes = {};
+        
+        // Check password
+        function checkPassword() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('loginOverlay').classList.add('hidden');
+                document.getElementById('adminContent').style.display = 'block';
+                loadPendingVotes();
+                loadConfirmedVotes();
             } else {
-                badge.classList.add('hidden');
+                document.getElementById('loginError').style.display = 'block';
+                document.getElementById('adminPassword').value = '';
             }
         }
-
-        // Hide notification banner
-        function hideNotifBanner() {
-            document.getElementById('notifBanner').classList.remove('show');
-            document.getElementById('pendingList').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Request notification permission
-        function requestNotifPermission() {
-            if ('Notification' in window && Notification.permission === 'default') {
-                Notification.requestPermission().then(function(permission) {
-                    notifPermission = permission === 'granted';
-                    if (notifPermission) {
-                        showToast('Notifications activées !');
-                    }
-                });
-            } else if (notifPermission) {
-                showToast('Notifications déjà activées');
-            } else {
-                showToast('Cliquez sur la cloche pour activer');
-            }
-        }
-
-        // Load stats
-        function loadStats() {
-            const votes = getVotes();
-            for (let i = 1; i <= 9; i++) {
-                const el = document.getElementById('stat-' + i);
-                if (el) {
-                    el.textContent = votes['candidate_' + i] || 0;
-                }
-            }
-        }
-
+        
         // Load pending votes
         function loadPendingVotes() {
-            const pendingList = document.getElementById('pendingList');
-            const pending = getPendingVotes();
+            database.ref('pendingVotes').on('value', function(snapshot) {
+                pendingVotes = snapshot.val() || {};
+                renderPendingVotes();
+                updateStats();
+            });
+        }
+        
+        // Load confirmed votes stats
+        function loadConfirmedVotes() {
+            database.ref('confirmedVotes').on('value', function(snapshot) {
+                const votes = snapshot.val() || {};
+                let total = 0;
+                for (let key in votes) {
+                    total += votes[key];
+                }
+                document.getElementById('totalVotes').textContent = total;
+            });
             
-            if (pending.length === 0) {
-                pendingList.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Aucun vote en attente</p></div>';
+            database.ref('stats').on('value', function(snapshot) {
+                const stats = snapshot.val() || {};
+                document.getElementById('validatedCount').textContent = stats.validatedCount || 0;
+                document.getElementById('totalAmount').textContent = (stats.totalAmount || 0).toLocaleString();
+            });
+        }
+        
+        // Update stats
+        function updateStats() {
+            const count = Object.keys(pendingVotes).length;
+            document.getElementById('pendingCount').textContent = count;
+            document.getElementById('validateAllBtn').style.display = count > 0 ? 'flex' : 'none';
+        }
+        
+        // Render pending votes
+        function renderPendingVotes() {
+            const container = document.getElementById('pendingVotesList');
+            const keys = Object.keys(pendingVotes);
+            
+            if (keys.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>Aucun vote en attente</h3>
+                        <p>Les nouveaux votes apparaîtront ici automatiquement</p>
+                    </div>
+                `;
                 return;
             }
             
             let html = '';
-            pending.forEach(function(vote) {
-                const date = new Date(vote.timestamp).toLocaleString('fr-FR');
-                html += '<div class="pending-item" id="pending-' + vote.id + '">' +
-                    '<div class="pending-info">' +
-                        '<strong>N°' + vote.candidateNumber + ' - ' + vote.candidateName + '</strong>' +
-                        '<span>' + vote.votes + ' vote(s) • ' + vote.amount + ' FCFA • ' + vote.phone + '</span><br>' +
-                        '<span style="font-size:0.8rem;color:#999;">' + date + '</span>' +
-                    '</div>' +
-                    '<div class="pending-actions">' +
-                        '<button class="btn btn-success" onclick="validateVote(' + vote.id + ')">' +
-                            '<i class="fas fa-check"></i> Valider' +
-                        '</button>' +
-                        '<button class="btn btn-danger" onclick="rejectVote(' + vote.id + ')">' +
-                            '<i class="fas fa-times"></i> Refuser' +
-                        '</button>' +
-                    '</div>' +
-                '</div>';
+            keys.forEach(function(key) {
+                const vote = pendingVotes[key];
+                const date = new Date(vote.timestamp);
+                const dateStr = date.toLocaleDateString('fr-FR') + ' à ' + date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'});
+                
+                html += `
+                    <div class="vote-item" id="vote-${key}">
+                        <div class="vote-info">
+                            <div class="vote-candidate">${vote.candidateName} (N°${vote.candidateNumber})</div>
+                            <div class="vote-details">
+                                <span><i class="fas fa-coins"></i> ${vote.amount} FCFA</span>
+                                <span><i class="fas fa-vote-yea"></i> ${vote.votes} vote(s)</span>
+                                <span><i class="fas fa-phone"></i> ${vote.phone}</span>
+                                <span><i class="fas fa-mobile-alt"></i> ${vote.paymentMethod === 'orange' ? 'Orange Money' : 'MTN MoMo'}</span>
+                            </div>
+                            <div class="vote-details">
+                                <span><i class="fas fa-clock"></i> ${dateStr}</span>
+                            </div>
+                        </div>
+                        <div class="vote-actions">
+                            <button class="btn btn-validate" onclick="validateVote('${key}')">
+                                <i class="fas fa-check"></i> Valider
+                            </button>
+                            <button class="btn btn-reject" onclick="rejectVote('${key}')">
+                                <i class="fas fa-times"></i> Rejeter
+                            </button>
+                        </div>
+                    </div>
+                `;
             });
-            pendingList.innerHTML = html;
-        }
-
-        // Validate vote
-        function validateVote(id) {
-            const pending = getPendingVotes();
-            const vote = pending.find(function(v) { return v.id === id; });
             
+            container.innerHTML = html;
+        }
+        
+        // Validate a vote
+        function validateVote(voteKey) {
+            const vote = pendingVotes[voteKey];
             if (!vote) return;
             
-            const votes = getVotes();
-            const newTotal = (votes['candidate_' + vote.candidateNumber] || 0) + vote.votes;
-            votes['candidate_' + vote.candidateNumber] = newTotal;
-            saveVotes(votes);
+            const candidateKey = 'candidate_' + vote.candidateNumber;
             
-            // Add to vote history for chart
-            addVoteToHistory(vote.candidateNumber, newTotal);
-            
-            const newPending = pending.filter(function(v) { return v.id !== id; });
-            savePendingVotes(newPending);
-            
-            lastKnownCount = newPending.length;
-            localStorage.setItem(STORAGE_KEYS.lastPendingCount, lastKnownCount.toString());
-            
-            loadStats();
-            loadPendingVotes();
-            updateBadge();
-            showToast('Vote validé !');
-        }
-
-        // Reject vote
-        function rejectVote(id) {
-            const pending = getPendingVotes();
-            const newPending = pending.filter(function(v) { return v.id !== id; });
-            savePendingVotes(newPending);
-            
-            lastKnownCount = newPending.length;
-            localStorage.setItem(STORAGE_KEYS.lastPendingCount, lastKnownCount.toString());
-            
-            loadPendingVotes();
-            updateBadge();
-            showToast('Vote refusé');
-        }
-
-        // Add manual votes
-        function addManualVotes() {
-            const candidateNum = document.getElementById('addCandidate').value;
-            const voteCount = parseInt(document.getElementById('addVotes').value) || 0;
-            
-            if (voteCount <= 0) {
-                alert('Veuillez entrer un nombre de votes valide');
-                return;
-            }
-            
-            const votes = getVotes();
-            const newTotal = (votes['candidate_' + candidateNum] || 0) + voteCount;
-            votes['candidate_' + candidateNum] = newTotal;
-            saveVotes(votes);
-            
-            // Add to vote history for chart
-            addVoteToHistory(parseInt(candidateNum), newTotal);
-            
-            document.getElementById('addVotes').value = 1;
-            loadStats();
-            showToast(voteCount + ' vote(s) ajouté(s)');
-        }
-
-        // Reset all votes
-        function resetAllVotes() {
-            if (confirm('Voulez-vous vraiment remettre tous les votes à zéro ?')) {
-                localStorage.removeItem(STORAGE_KEYS.votes);
-                localStorage.removeItem(STORAGE_KEYS.pendingVotes);
-                localStorage.removeItem(STORAGE_KEYS.lastPendingCount);
-                localStorage.removeItem(STORAGE_KEYS.voteHistory);
-                lastKnownCount = 0;
-                loadStats();
-                loadPendingVotes();
-                updateBadge();
-                showToast('Votes réinitialisés');
-            }
-        }
-
-        // Storage helpers
-        function getVotes() {
-            try {
-                const data = localStorage.getItem(STORAGE_KEYS.votes);
-                return data ? JSON.parse(data) : {
-                    candidate_1: 0,
-                    candidate_2: 0,
-                    candidate_3: 0,
-                    candidate_4: 0
-                };
-            } catch (e) {
-                return { candidate_1: 0, candidate_2: 0, candidate_3: 0, candidate_4: 0 };
-            }
-        }
-
-        function saveVotes(votes) {
-            localStorage.setItem(STORAGE_KEYS.votes, JSON.stringify(votes));
-        }
-
-        function getPendingVotes() {
-            try {
-                const data = localStorage.getItem(STORAGE_KEYS.pendingVotes);
-                return data ? JSON.parse(data) : [];
-            } catch (e) {
-                return [];
-            }
-        }
-
-        function savePendingVotes(pending) {
-            localStorage.setItem(STORAGE_KEYS.pendingVotes, JSON.stringify(pending));
-        }
-
-        // Vote history for charts
-        function getVoteHistory() {
-            try {
-                const data = localStorage.getItem(STORAGE_KEYS.voteHistory);
-                if (data) {
-                    return JSON.parse(data);
-                }
-            } catch (e) {
-                console.error('Error getting vote history:', e);
-            }
-            
-            const history = {};
-            for (let i = 1; i <= 9; i++) {
-                history['candidate_' + i] = [];
-            }
-            return history;
-        }
-
-        function addVoteToHistory(candidateNumber, totalVotes) {
-            const history = getVoteHistory();
-            const key = 'candidate_' + candidateNumber;
-            
-            if (!history[key]) {
-                history[key] = [];
-            }
-            
-            history[key].push({
-                timestamp: new Date().toISOString(),
-                votes: totalVotes
+            // Get current vote count
+            database.ref('confirmedVotes/' + candidateKey).once('value').then(function(snapshot) {
+                const currentVotes = snapshot.val() || 0;
+                const newVotes = currentVotes + vote.votes;
+                
+                // Update confirmed votes
+                const updates = {};
+                updates['confirmedVotes/' + candidateKey] = newVotes;
+                
+                return database.ref().update(updates);
+            }).then(function() {
+                // Update stats
+                return database.ref('stats').once('value');
+            }).then(function(snapshot) {
+                const stats = snapshot.val() || { validatedCount: 0, totalAmount: 0 };
+                return database.ref('stats').update({
+                    validatedCount: (stats.validatedCount || 0) + 1,
+                    totalAmount: (stats.totalAmount || 0) + vote.amount
+                });
+            }).then(function() {
+                // Remove from pending
+                return database.ref('pendingVotes/' + voteKey).remove();
+            }).then(function() {
+                showToast('Vote validé ! +' + vote.votes + ' vote(s) pour ' + vote.candidateName);
+            }).catch(function(error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la validation');
             });
-            
-            // Keep only last 20 entries
-            if (history[key].length > 20) {
-                history[key] = history[key].slice(-20);
-            }
-            
-            localStorage.setItem(STORAGE_KEYS.voteHistory, JSON.stringify(history));
         }
-
-        // Toast
+        
+        // Reject a vote
+        function rejectVote(voteKey) {
+            if (!confirm('Êtes-vous sûr de vouloir rejeter ce vote ?')) return;
+            
+            database.ref('pendingVotes/' + voteKey).remove()
+                .then(function() {
+                    showToast('Vote rejeté');
+                })
+                .catch(function(error) {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors du rejet');
+                });
+        }
+        
+        // Validate all votes
+        function validateAllVotes() {
+            if (!confirm('Valider TOUS les votes en attente ?')) return;
+            
+            const keys = Object.keys(pendingVotes);
+            keys.forEach(function(key) {
+                validateVote(key);
+            });
+        }
+        
+        // Toast notification
         function showToast(message) {
             const toast = document.getElementById('toast');
-            toast.textContent = message;
+            document.getElementById('toastMessage').textContent = message;
             toast.classList.add('show');
             setTimeout(function() {
                 toast.classList.remove('show');
-            }, 2500);
+            }, 3000);
         }
     </script>
 </body>
