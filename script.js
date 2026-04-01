@@ -176,6 +176,13 @@ function showPaymentInstructions(type) {
     document.getElementById('paymentAmount').textContent = currentAmount.toLocaleString();
     document.getElementById('candidateNum').textContent = currentCandidate.number;
     
+    // Update the pay now button with USSD link
+    const payNowBtn = document.getElementById('payNowBtn');
+    if (payNowBtn) {
+        payNowBtn.href = `tel:${encodeURIComponent(payment.ussd)}`;
+        payNowBtn.setAttribute('data-payment', type);
+    }
+    
     instructions.style.display = 'block';
     instructions.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
@@ -202,6 +209,46 @@ function confirmVote() {
     
     // Update votes display (simulation - in real app, this would be server-side)
     simulateVoteUpdate();
+}
+
+// Open USSD and copy payment info
+function initiatePayment() {
+    if (!selectedPayment || !currentCandidate) {
+        showToast('Veuillez sélectionner un mode de paiement');
+        return;
+    }
+    
+    const payment = CONFIG.payments[selectedPayment];
+    const motif = `MISS EGEM N${currentCandidate.number}`;
+    
+    // Copy payment details to clipboard
+    const paymentInfo = `${payment.number}`;
+    copyToClipboard(paymentInfo);
+    
+    // Show toast with instructions
+    showToast(`Numéro ${payment.displayNumber} copié !`);
+    
+    // Small delay then open USSD
+    setTimeout(() => {
+        // Open USSD code - this will open the phone dialer with the USSD code
+        window.location.href = `tel:${encodeURIComponent(payment.ussd)}`;
+    }, 500);
+    
+    // Show payment reminder after a delay
+    setTimeout(() => {
+        showPaymentReminder();
+    }, 2000);
+}
+
+function showPaymentReminder() {
+    const payment = CONFIG.payments[selectedPayment];
+    const reminderDiv = document.getElementById('paymentReminder');
+    if (reminderDiv) {
+        document.getElementById('reminderNumber').textContent = payment.displayNumber;
+        document.getElementById('reminderAmount').textContent = currentAmount.toLocaleString();
+        document.getElementById('reminderMotif').textContent = `MISS EGEM N${currentCandidate.number}`;
+        reminderDiv.style.display = 'block';
+    }
 }
 
 function closeSuccessModal() {

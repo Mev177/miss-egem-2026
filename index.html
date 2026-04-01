@@ -357,14 +357,31 @@
                 </div>
 
                 <div class="payment-instructions" id="paymentInstructions" style="display: none;">
+                    <!-- Bouton principal pour payer -->
+                    <a href="#" id="payNowBtn" class="btn btn-pay btn-lg" onclick="initiatePayment(); return false;">
+                        <i class="fas fa-money-bill-wave"></i> PAYER MAINTENANT
+                    </a>
+                    
+                    <div class="payment-reminder" id="paymentReminder" style="display: none;">
+                        <div class="reminder-box">
+                            <h4><i class="fas fa-info-circle"></i> Informations à saisir :</h4>
+                            <div class="reminder-info">
+                                <p><strong>Numéro :</strong> <span id="reminderNumber"></span></p>
+                                <p><strong>Montant :</strong> <span id="reminderAmount"></span> FCFA</p>
+                                <p><strong>Motif :</strong> <span id="reminderMotif"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="instruction-box">
-                        <h4><i class="fas fa-list-ol"></i> Instructions de paiement</h4>
+                        <h4><i class="fas fa-list-ol"></i> Étapes du paiement</h4>
                         <ol>
-                            <li>Composez <strong id="ussdCode"></strong></li>
+                            <li>Cliquez sur <strong>"PAYER MAINTENANT"</strong></li>
+                            <li>Le menu <strong id="ussdCode"></strong> s'ouvre automatiquement</li>
                             <li>Sélectionnez "Transfert d'argent"</li>
                             <li>Entrez le numéro : <strong id="paymentNum"></strong></li>
                             <li>Entrez le montant : <strong id="paymentAmount"></strong> FCFA</li>
-                            <li>En motif, écrivez : <strong>MISS EGEM N°<span id="candidateNum"></span></strong></li>
+                            <li>En motif : <strong>MISS EGEM N°<span id="candidateNum"></span></strong></li>
                             <li>Confirmez avec votre code PIN</li>
                         </ol>
                         <div class="copy-buttons">
