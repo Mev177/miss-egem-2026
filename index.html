@@ -371,32 +371,37 @@
             <!-- Step 1: Amount -->
             <div class="modal-step" id="step1">
                 <div class="modal-header">
-                    <h2><span id="modalCandidateName"></span></h2>
-                    <p>Finaliste N°<span id="modalCandidateNumber"></span></p>
+                    <h2>Voter pour <span id="modalCandidateName"></span></h2>
+                    <p>Finaliste <span id="modalCandidateNumber"></span></p>
                 </div>
                 <div class="modal-body">
                     <div class="vote-calculator">
-                        <label>Choisissez le montant</label>
-                        <div class="amount-input-group">
-                            <button class="amount-btn" onclick="adjustAmount(-100)">-</button>
+                        <div class="vote-amount-display">
+                            <span class="currency">FCFA</span>
                             <input type="number" id="voteAmount" min="100" step="100" value="100" onchange="updateVotes()" inputmode="numeric">
-                            <button class="amount-btn" onclick="adjustAmount(100)">+</button>
                         </div>
+                        
+                        <div class="vote-result">
+                            <div class="vote-equals">=</div>
+                            <div class="vote-count">
+                                <span id="votesPreview">1</span>
+                                <small>vote(s)</small>
+                            </div>
+                        </div>
+
                         <div class="quick-amounts">
-                            <button onclick="setAmount(100)">100 F</button>
-                            <button onclick="setAmount(500)">500 F</button>
-                            <button onclick="setAmount(1000)">1 000 F</button>
-                            <button onclick="setAmount(2000)">2 000 F</button>
-                            <button onclick="setAmount(5000)">5 000 F</button>
+                            <button onclick="setAmount(100)" class="active">100</button>
+                            <button onclick="setAmount(500)">500</button>
+                            <button onclick="setAmount(1000)">1K</button>
+                            <button onclick="setAmount(2000)">2K</button>
+                            <button onclick="setAmount(5000)">5K</button>
+                            <button onclick="setAmount(10000)">10K</button>
                         </div>
-                        <div class="votes-preview">
-                            Vous obtiendrez
-                            <strong id="votesPreview">1</strong>
-                            vote(s)
-                        </div>
+                        
+                        <p class="vote-info">100 FCFA = 1 vote</p>
                     </div>
                     <button class="btn btn-next" onclick="goToStep2()">
-                        Continuer <i class="fas fa-arrow-right"></i>
+                        Choisir le mode de paiement <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
@@ -404,49 +409,61 @@
             <!-- Step 2: Payment -->
             <div class="modal-step" id="step2" style="display:none;">
                 <div class="modal-header orange-header">
-                    <h2>Effectuez le paiement</h2>
-                    <p><span id="step2Amount">100</span> FCFA = <span id="step2Votes">1</span> vote(s)</p>
+                    <h2>Mode de paiement</h2>
+                    <p><span id="step2Amount">100</span> FCFA → <span id="step2Votes">1</span> vote(s)</p>
                 </div>
                 <div class="modal-body">
                     <p class="payment-instruction">
-                        Envoyez <strong id="amountDisplay">100</strong> FCFA à l'un de ces numéros :
+                        Sélectionnez votre opérateur et envoyez <strong id="amountDisplay">100</strong> FCFA
                     </p>
 
-                    <!-- Orange Money -->
-                    <div class="payment-box orange">
-                        <div class="payment-box-header">
-                            <i class="fas fa-mobile-alt"></i>
-                            <span>Orange Money</span>
+                    <div class="payment-methods">
+                        <!-- Orange Money -->
+                        <div class="payment-method orange" onclick="selectPayment('orange')">
+                            <div class="payment-method-logo">
+                                <i class="fas fa-circle" style="color: #FF6600;"></i>
+                            </div>
+                            <div class="payment-method-info">
+                                <span class="payment-method-name">Orange Money</span>
+                                <span class="payment-method-number">659 68 87 59</span>
+                            </div>
+                            <div class="payment-method-check">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
                         </div>
-                        <div class="payment-box-number">659 68 87 59</div>
-                        <div class="payment-box-name">DJENGUE Yassine</div>
-                        <div class="payment-ussd">Tapez <strong>#150#</strong> puis Transfert</div>
-                        <div class="payment-box-actions">
-                            <button class="btn-pay-now orange-btn" onclick="copyNumber('659688759', 'orange')">
-                                <i class="fas fa-copy"></i> Copier le numéro
-                            </button>
+
+                        <!-- MTN MoMo -->
+                        <div class="payment-method mtn" onclick="selectPayment('mtn')">
+                            <div class="payment-method-logo">
+                                <i class="fas fa-circle" style="color: #FFCC00;"></i>
+                            </div>
+                            <div class="payment-method-info">
+                                <span class="payment-method-name">MTN Mobile Money</span>
+                                <span class="payment-method-number">683 68 55 81</span>
+                            </div>
+                            <div class="payment-method-check">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- MTN MoMo -->
-                    <div class="payment-box mtn">
-                        <div class="payment-box-header">
-                            <i class="fas fa-mobile-alt"></i>
-                            <span>MTN Mobile Money</span>
-                        </div>
-                        <div class="payment-box-number">683 68 55 81</div>
-                        <div class="payment-box-name">Alvarez Rychelle</div>
-                        <div class="payment-ussd">Tapez <strong>*126#</strong> puis Transfert</div>
-                        <div class="payment-box-actions">
-                            <button class="btn-pay-now mtn-btn" onclick="copyNumber('683685581', 'mtn')">
-                                <i class="fas fa-copy"></i> Copier le numéro
+                    <div class="payment-selected" id="paymentDetails" style="display:none;">
+                        <div class="payment-selected-header">
+                            <span id="selectedOperator">Orange Money</span>
+                            <button class="btn-copy-number" onclick="copySelectedNumber()">
+                                <i class="fas fa-copy"></i> Copier
                             </button>
+                        </div>
+                        <div class="payment-selected-number" id="selectedNumber">659 68 87 59</div>
+                        <div class="payment-selected-name" id="selectedName">DJENGUE Yassine</div>
+                        <div class="payment-selected-ussd" id="selectedUssd">
+                            Tapez <strong>#150#</strong> → Transfert → <span id="ussdAmount">100</span> FCFA
                         </div>
                     </div>
 
                     <div class="payment-motif">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <span>Motif de transfert : <strong id="motifText">MISS 1</strong></span>
+                        <i class="fas fa-info-circle"></i>
+                        Motif : <strong id="motifText">MISS 1</strong>
                     </div>
 
                     <div class="step-buttons">
@@ -454,7 +471,7 @@
                             <i class="fas fa-arrow-left"></i> Retour
                         </button>
                         <button class="btn btn-success" onclick="goToStep3()">
-                            <i class="fas fa-check"></i> J'ai payé
+                            J'ai payé <i class="fas fa-check"></i>
                         </button>
                     </div>
                 </div>

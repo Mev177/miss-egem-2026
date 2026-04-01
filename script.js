@@ -141,8 +141,48 @@ function goToStep2() {
     document.getElementById('step2Amount').textContent = amount;
     document.getElementById('step2Votes').textContent = currentVotes;
     document.getElementById('amountDisplay').textContent = amount;
+    document.getElementById('ussdAmount').textContent = amount;
+    
+    // Reset payment selection
+    document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
+    document.getElementById('paymentDetails').style.display = 'none';
     
     showStep(2);
+}
+
+// ===== PAYMENT SELECTION =====
+let selectedPaymentMethod = null;
+
+function selectPayment(method) {
+    // Remove selected class from all
+    document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
+    
+    // Add selected class to chosen method
+    document.querySelector('.payment-method.' + method).classList.add('selected');
+    
+    selectedPaymentMethod = method;
+    
+    // Show payment details
+    const details = document.getElementById('paymentDetails');
+    details.style.display = 'block';
+    
+    if (method === 'orange') {
+        document.getElementById('selectedOperator').textContent = 'Orange Money';
+        document.getElementById('selectedNumber').textContent = '659 68 87 59';
+        document.getElementById('selectedName').textContent = 'DJENGUE Yassine';
+        document.getElementById('selectedUssd').innerHTML = 'Tapez <strong>#150#</strong> → Transfert → <span id="ussdAmount">' + currentAmount + '</span> FCFA';
+    } else {
+        document.getElementById('selectedOperator').textContent = 'MTN Mobile Money';
+        document.getElementById('selectedNumber').textContent = '683 68 55 81';
+        document.getElementById('selectedName').textContent = 'Alvarez Rychelle';
+        document.getElementById('selectedUssd').innerHTML = 'Tapez <strong>*126#</strong> → Transfert → <span id="ussdAmount">' + currentAmount + '</span> FCFA';
+    }
+}
+
+function copySelectedNumber() {
+    const number = selectedPaymentMethod === 'orange' ? '659688759' : '683685581';
+    copyToClipboard(number);
+    showToast('Numéro copié !');
 }
 
 function goToStep3() {
@@ -167,6 +207,15 @@ function adjustAmount(delta) {
 function setAmount(amount) {
     document.getElementById('voteAmount').value = amount;
     updateVotes();
+    
+    // Update active button
+    document.querySelectorAll('.quick-amounts button').forEach(btn => {
+        btn.classList.remove('active');
+        const btnAmount = parseInt(btn.textContent.replace('K', '000').replace(/[^0-9]/g, ''));
+        if (btnAmount === amount) {
+            btn.classList.add('active');
+        }
+    });
 }
 
 function updateVotes() {
