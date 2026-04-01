@@ -2,24 +2,25 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#e91e63">
+    
     <title>MISS EGEM 2026 - Vote en ligne</title>
     <meta name="description" content="Votez pour votre candidate préférée à l'élection MISS EGEM 2026. 100 FCFA = 1 vote via Orange Money ou MTN Mobile Money.">
     
-    <!-- Open Graph pour partage Facebook/WhatsApp -->
+    <!-- Open Graph -->
     <meta property="og:title" content="MISS EGEM 2026 - Vote en ligne">
-    <meta property="og:description" content="Votez pour votre candidate préférée ! 100 FCFA = 1 vote via Orange Money ou MTN Mobile Money.">
+    <meta property="og:description" content="Votez pour votre candidate préférée ! 100 FCFA = 1 vote">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mev177.github.io/miss-egem-2026/">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -32,7 +33,6 @@
             <nav class="nav">
                 <a href="#candidates" class="nav-link">Candidates</a>
                 <a href="#how-to-vote" class="nav-link">Comment voter</a>
-                <a href="#contact" class="nav-link">Contact</a>
             </nav>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
@@ -67,17 +67,12 @@
                 <i class="fas fa-vote-yea"></i> Voir les candidates
             </a>
         </div>
-        <div class="hero-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
-        </div>
     </section>
 
     <!-- Share Section -->
     <section class="share-section">
         <div class="container">
-            <p class="share-text">Partagez et invitez vos amis à voter :</p>
+            <p class="share-text">Partagez :</p>
             <div class="share-buttons">
                 <a href="#" class="share-btn whatsapp" id="shareWhatsapp">
                     <i class="fab fa-whatsapp"></i> WhatsApp
@@ -86,7 +81,7 @@
                     <i class="fab fa-facebook-f"></i> Facebook
                 </a>
                 <button class="share-btn copy-link" id="copyLink">
-                    <i class="fas fa-link"></i> Copier le lien
+                    <i class="fas fa-link"></i> Copier
                 </button>
             </div>
         </div>
@@ -99,17 +94,13 @@
                 <i class="fas fa-users"></i>
                 Nos Candidates
             </h2>
-            <p class="section-subtitle">Découvrez les 4 candidates en compétition pour le titre de Miss EGEM 2026</p>
             
             <div class="candidates-grid">
                 <!-- Candidate 1 -->
-                <div class="candidate-card" data-candidate="1">
+                <div class="candidate-card">
                     <div class="candidate-image">
-                        <img src="candidate n°1.jpeg" alt="EBI ONGONO - Candidate N°1">
+                        <img src="candidate n°1.jpeg" alt="EBI ONGONO">
                         <div class="candidate-number">N°1</div>
-                        <div class="candidate-badge">
-                            <i class="fas fa-star"></i>
-                        </div>
                     </div>
                     <div class="candidate-info">
                         <h3 class="candidate-name">EBI ONGONO</h3>
@@ -117,22 +108,19 @@
                         <p class="candidate-description">Je participe à l'événement Miss/Misters EGEM 2026</p>
                         <div class="candidate-votes">
                             <i class="fas fa-heart"></i>
-                            <span class="votes-count" id="votes-1">0</span> votes
+                            <span id="votes-1">0</span> votes
                         </div>
                         <button class="btn btn-vote" onclick="openVoteModal(1, 'EBI ONGONO')">
-                            <i class="fas fa-vote-yea"></i> Voter pour elle
+                            <i class="fas fa-vote-yea"></i> Voter
                         </button>
                     </div>
                 </div>
 
                 <!-- Candidate 2 -->
-                <div class="candidate-card" data-candidate="2">
+                <div class="candidate-card">
                     <div class="candidate-image">
-                        <img src="candidate n°2.jpeg" alt="KOLNIKIE FLEUR - Candidate N°2">
+                        <img src="candidate n°2.jpeg" alt="KOLNIKIE FLEUR">
                         <div class="candidate-number">N°2</div>
-                        <div class="candidate-badge">
-                            <i class="fas fa-star"></i>
-                        </div>
                     </div>
                     <div class="candidate-info">
                         <h3 class="candidate-name">KOLNIKIE FLEUR</h3>
@@ -140,22 +128,19 @@
                         <p class="candidate-description">Je participe à l'événement Miss/Misters EGEM 2026</p>
                         <div class="candidate-votes">
                             <i class="fas fa-heart"></i>
-                            <span class="votes-count" id="votes-2">0</span> votes
+                            <span id="votes-2">0</span> votes
                         </div>
                         <button class="btn btn-vote" onclick="openVoteModal(2, 'KOLNIKIE FLEUR')">
-                            <i class="fas fa-vote-yea"></i> Voter pour elle
+                            <i class="fas fa-vote-yea"></i> Voter
                         </button>
                     </div>
                 </div>
 
                 <!-- Candidate 3 -->
-                <div class="candidate-card" data-candidate="3">
+                <div class="candidate-card">
                     <div class="candidate-image">
-                        <img src="candidate n°3.jpeg" alt="NGA NNANG - Candidate N°3">
+                        <img src="candidate n°3.jpeg" alt="NGA NNANG">
                         <div class="candidate-number">N°3</div>
-                        <div class="candidate-badge">
-                            <i class="fas fa-star"></i>
-                        </div>
                     </div>
                     <div class="candidate-info">
                         <h3 class="candidate-name">NGA NNANG</h3>
@@ -163,22 +148,19 @@
                         <p class="candidate-description">Je participe à l'événement Miss/Misters EGEM 2026</p>
                         <div class="candidate-votes">
                             <i class="fas fa-heart"></i>
-                            <span class="votes-count" id="votes-3">0</span> votes
+                            <span id="votes-3">0</span> votes
                         </div>
                         <button class="btn btn-vote" onclick="openVoteModal(3, 'NGA NNANG')">
-                            <i class="fas fa-vote-yea"></i> Voter pour elle
+                            <i class="fas fa-vote-yea"></i> Voter
                         </button>
                     </div>
                 </div>
 
                 <!-- Candidate 4 -->
-                <div class="candidate-card" data-candidate="4">
+                <div class="candidate-card">
                     <div class="candidate-image">
-                        <img src="candidate n°4.jpeg" alt="MOUKAM Merciale - Candidate N°4">
+                        <img src="candidate n°4.jpeg" alt="MOUKAM Merciale">
                         <div class="candidate-number">N°4</div>
-                        <div class="candidate-badge">
-                            <i class="fas fa-star"></i>
-                        </div>
                     </div>
                     <div class="candidate-info">
                         <h3 class="candidate-name">MOUKAM Merciale</h3>
@@ -186,10 +168,10 @@
                         <p class="candidate-description">Je participe à l'événement Miss/Misters EGEM 2026</p>
                         <div class="candidate-votes">
                             <i class="fas fa-heart"></i>
-                            <span class="votes-count" id="votes-4">0</span> votes
+                            <span id="votes-4">0</span> votes
                         </div>
                         <button class="btn btn-vote" onclick="openVoteModal(4, 'MOUKAM Merciale')">
-                            <i class="fas fa-vote-yea"></i> Voter pour elle
+                            <i class="fas fa-vote-yea"></i> Voter
                         </button>
                     </div>
                 </div>
@@ -208,43 +190,26 @@
             <div class="steps-grid">
                 <div class="step-card">
                     <div class="step-number">1</div>
-                    <div class="step-icon">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <h3>Choisissez votre candidate</h3>
-                    <p>Parcourez les profils et sélectionnez la candidate que vous souhaitez soutenir</p>
+                    <div class="step-icon"><i class="fas fa-user-check"></i></div>
+                    <h3>Choisissez</h3>
+                    <p>Sélectionnez votre candidate préférée</p>
                 </div>
-                
                 <div class="step-card">
                     <div class="step-number">2</div>
-                    <div class="step-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Effectuez le paiement</h3>
-                    <p>Transférez le montant via Orange Money ou MTN MoMo. 100 FCFA = 1 vote</p>
+                    <div class="step-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Payez</h3>
+                    <p>Via Orange Money ou MTN MoMo</p>
                 </div>
-                
                 <div class="step-card">
                     <div class="step-number">3</div>
-                    <div class="step-icon">
-                        <i class="fas fa-paper-plane"></i>
-                    </div>
-                    <h3>Soumettez votre vote</h3>
-                    <p>Entrez votre numéro de téléphone pour confirmer votre paiement</p>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <div class="step-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>Vote validé</h3>
-                    <p>Votre vote est ajouté après vérification du paiement</p>
+                    <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                    <h3>Validé</h3>
+                    <p>Votes ajoutés après vérification</p>
                 </div>
             </div>
 
             <div class="payment-info">
-                <h3><i class="fas fa-wallet"></i> Moyens de paiement</h3>
+                <h3><i class="fas fa-wallet"></i> Numéros de paiement</h3>
                 <div class="payment-methods">
                     <div class="payment-card orange">
                         <div class="payment-logo">
@@ -253,7 +218,7 @@
                         </div>
                         <div class="payment-number">
                             <strong>659 68 87 59</strong>
-                            <span class="payment-name">DJENGUE Yassine</span>
+                            <span>DJENGUE Yassine</span>
                         </div>
                     </div>
                     <div class="payment-card mtn">
@@ -263,13 +228,13 @@
                         </div>
                         <div class="payment-number">
                             <strong>683 68 55 81</strong>
-                            <span class="payment-name">Alvarez Rychelle</span>
+                            <span>Alvarez Rychelle</span>
                         </div>
                     </div>
                 </div>
                 <p class="payment-note">
                     <i class="fas fa-info-circle"></i>
-                    En motif, écrivez : <strong>MISS + N° candidate</strong> (exemple: MISS 1)
+                    En motif : <strong>MISS + N° candidate</strong> (ex: MISS 1)
                 </p>
             </div>
         </div>
@@ -279,10 +244,9 @@
     <section class="contact-section" id="contact">
         <div class="container">
             <h2 class="section-title">
-                <i class="fas fa-envelope"></i>
+                <i class="fas fa-phone"></i>
                 Contact
             </h2>
-            <p class="contact-text">Pour toute question concernant le vote ou l'événement :</p>
             <div class="contact-buttons">
                 <a href="tel:+237659688759" class="contact-btn">
                     <i class="fas fa-phone"></i> 659 68 87 59
@@ -297,17 +261,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <i class="fas fa-crown"></i>
-                    <span>MISS EGEM 2026</span>
-                </div>
-                <p class="footer-text">© 2026 EGEM - Tous droits réservés</p>
-                <div class="footer-social">
-                    <a href="#" id="footerWhatsapp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" id="footerFacebook"><i class="fab fa-facebook-f"></i></a>
-                </div>
-            </div>
+            <p>© 2026 MISS EGEM - Tous droits réservés</p>
         </div>
     </footer>
 
@@ -318,139 +272,136 @@
                 <i class="fas fa-times"></i>
             </button>
             
-            <!-- Step 1: Choose amount -->
+            <!-- Step 1: Amount -->
             <div class="modal-step" id="step1">
                 <div class="modal-header">
-                    <i class="fas fa-vote-yea"></i>
                     <h2>Voter pour <span id="modalCandidateName"></span></h2>
                     <p>Candidate N°<span id="modalCandidateNumber"></span></p>
                 </div>
                 <div class="modal-body">
                     <div class="vote-calculator">
-                        <label for="voteAmount">Montant en FCFA :</label>
+                        <label>Montant (FCFA) :</label>
                         <div class="amount-input-group">
                             <button class="amount-btn" onclick="adjustAmount(-100)">-</button>
-                            <input type="number" id="voteAmount" min="100" step="100" value="100" onchange="updateVotes()">
+                            <input type="number" id="voteAmount" min="100" step="100" value="100" onchange="updateVotes()" inputmode="numeric">
                             <button class="amount-btn" onclick="adjustAmount(100)">+</button>
                         </div>
                         <div class="quick-amounts">
                             <button onclick="setAmount(100)">100</button>
                             <button onclick="setAmount(500)">500</button>
-                            <button onclick="setAmount(1000)">1000</button>
-                            <button onclick="setAmount(2000)">2000</button>
-                            <button onclick="setAmount(5000)">5000</button>
+                            <button onclick="setAmount(1000)">1K</button>
+                            <button onclick="setAmount(2000)">2K</button>
+                            <button onclick="setAmount(5000)">5K</button>
                         </div>
                         <div class="votes-preview">
                             <i class="fas fa-heart"></i>
-                            <span>= <strong id="votesPreview">1</strong> vote(s)</span>
+                            = <strong id="votesPreview">1</strong> vote(s)
                         </div>
                     </div>
-                    
-                    <button class="btn btn-primary btn-lg" style="width:100%" onclick="goToStep2()">
-                        <i class="fas fa-arrow-right"></i> Continuer
+                    <button class="btn btn-next" onclick="goToStep2()">
+                        Continuer <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Step 2: Payment -->
-            <div class="modal-step" id="step2" style="display: none;">
-                <div class="modal-header payment-header">
-                    <i class="fas fa-money-bill-wave"></i>
+            <div class="modal-step" id="step2" style="display:none;">
+                <div class="modal-header orange-header">
                     <h2>Effectuez le paiement</h2>
                     <p><span id="step2Amount">100</span> FCFA = <span id="step2Votes">1</span> vote(s)</p>
                 </div>
                 <div class="modal-body">
-                    <div class="payment-choice">
-                        <p class="payment-instruction">Envoyez <strong id="amountToSend">100</strong> FCFA à l'un de ces numéros :</p>
-                        
-                        <div class="payment-options-large">
-                            <div class="payment-option-large orange">
-                                <div class="payment-icon">
-                                    <i class="fas fa-mobile-alt"></i>
-                                </div>
-                                <div class="payment-details">
-                                    <span class="payment-type">Orange Money</span>
-                                    <strong class="payment-num">659 68 87 59</strong>
-                                    <span class="payment-owner">DJENGUE Yassine</span>
-                                </div>
-                                <button class="copy-btn" onclick="copyToClipboard('659688759'); showToast('Numéro Orange copié !');">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </div>
-                            
-                            <div class="payment-option-large mtn">
-                                <div class="payment-icon">
-                                    <i class="fas fa-mobile-alt"></i>
-                                </div>
-                                <div class="payment-details">
-                                    <span class="payment-type">MTN MoMo</span>
-                                    <strong class="payment-num">683 68 55 81</strong>
-                                    <span class="payment-owner">Alvarez Rychelle</span>
-                                </div>
-                                <button class="copy-btn" onclick="copyToClipboard('683685581'); showToast('Numéro MTN copié !');">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </div>
+                    <p class="payment-instruction">
+                        Envoyez <strong id="amountDisplay">100</strong> FCFA à l'un de ces numéros :
+                    </p>
+
+                    <!-- Orange Money -->
+                    <div class="payment-box orange">
+                        <div class="payment-box-header">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Orange Money</span>
                         </div>
-                        
-                        <div class="payment-motif">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <span>En motif de transfert, écrivez exactement : <strong id="paymentMotif">MISS 1</strong></span>
+                        <div class="payment-box-number">659 68 87 59</div>
+                        <div class="payment-box-name">DJENGUE Yassine</div>
+                        <div class="payment-box-actions">
+                            <a href="tel:*150*1*1*659688759#" class="btn-pay-now orange-btn">
+                                <i class="fas fa-paper-plane"></i> Payer via Orange
+                            </a>
+                            <button class="btn-copy" onclick="copyNumber('659688759', 'orange')">
+                                <i class="fas fa-copy"></i>
+                            </button>
                         </div>
                     </div>
-                    
+
+                    <!-- MTN MoMo -->
+                    <div class="payment-box mtn">
+                        <div class="payment-box-header">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>MTN Mobile Money</span>
+                        </div>
+                        <div class="payment-box-number">683 68 55 81</div>
+                        <div class="payment-box-name">Alvarez Rychelle</div>
+                        <div class="payment-box-actions">
+                            <a href="tel:*126*1*1*683685581#" class="btn-pay-now mtn-btn">
+                                <i class="fas fa-paper-plane"></i> Payer via MTN
+                            </a>
+                            <button class="btn-copy" onclick="copyNumber('683685581', 'mtn')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="payment-motif">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Motif de transfert : <strong id="motifText">MISS 1</strong></span>
+                    </div>
+
                     <div class="step-buttons">
-                        <button class="btn btn-secondary" onclick="goToStep1()">
+                        <button class="btn btn-back" onclick="goToStep1()">
                             <i class="fas fa-arrow-left"></i> Retour
                         </button>
-                        <button class="btn btn-success btn-lg" onclick="goToStep3()">
+                        <button class="btn btn-success" onclick="goToStep3()">
                             <i class="fas fa-check"></i> J'ai payé
                         </button>
                     </div>
                 </div>
             </div>
             
-            <!-- Step 3: Confirm phone -->
-            <div class="modal-step" id="step3" style="display: none;">
-                <div class="modal-header confirm-header">
-                    <i class="fas fa-phone-alt"></i>
+            <!-- Step 3: Confirm -->
+            <div class="modal-step" id="step3" style="display:none;">
+                <div class="modal-header green-header">
                     <h2>Confirmez votre vote</h2>
-                    <p>Entrez le numéro avec lequel vous avez payé</p>
+                    <p>Entrez le numéro qui a payé</p>
                 </div>
                 <div class="modal-body">
                     <div class="phone-form">
-                        <label for="voterPhone">Votre numéro de téléphone :</label>
+                        <label>Votre numéro :</label>
                         <div class="phone-input-group">
-                            <span class="phone-prefix">+237</span>
-                            <input type="tel" id="voterPhone" placeholder="6XX XX XX XX" maxlength="9">
+                            <span class="prefix">+237</span>
+                            <input type="tel" id="voterPhone" placeholder="6XX XX XX XX" maxlength="9" inputmode="tel">
                         </div>
-                        <p class="phone-hint">
-                            <i class="fas fa-shield-alt"></i>
-                            Ce numéro permet de vérifier votre paiement
-                        </p>
                     </div>
                     
                     <div class="vote-summary">
-                        <h4><i class="fas fa-receipt"></i> Récapitulatif</h4>
-                        <div class="summary-item">
+                        <div class="summary-row">
                             <span>Candidate :</span>
                             <strong id="summaryCandidate">-</strong>
                         </div>
-                        <div class="summary-item">
+                        <div class="summary-row">
                             <span>Montant :</span>
                             <strong id="summaryAmount">-</strong>
                         </div>
-                        <div class="summary-item">
+                        <div class="summary-row">
                             <span>Votes :</span>
                             <strong id="summaryVotes">-</strong>
                         </div>
                     </div>
-                    
+
                     <div class="step-buttons">
-                        <button class="btn btn-secondary" onclick="goToStep2()">
+                        <button class="btn btn-back" onclick="goToStep2()">
                             <i class="fas fa-arrow-left"></i> Retour
                         </button>
-                        <button class="btn btn-primary btn-lg" onclick="submitVote()" id="submitBtn">
+                        <button class="btn btn-submit" onclick="submitVote()">
                             <i class="fas fa-paper-plane"></i> Soumettre
                         </button>
                     </div>
@@ -462,35 +413,28 @@
     <!-- Success Modal -->
     <div class="modal-overlay" id="successModal">
         <div class="modal success-modal">
-            <div class="success-icon pending">
+            <div class="success-icon">
                 <i class="fas fa-hourglass-half"></i>
             </div>
-            <h2>Vote en attente de validation</h2>
-            <p>Votre vote sera comptabilisé dès que nous aurons vérifié votre paiement.</p>
-            <p class="success-note"><i class="fas fa-info-circle"></i> Cela peut prendre quelques minutes.</p>
-            <p class="share-prompt">En attendant, partagez pour encourager vos amis à voter :</p>
-            <div class="share-buttons">
+            <h2>Vote soumis !</h2>
+            <p>Votre vote sera comptabilisé après vérification du paiement.</p>
+            <div class="share-buttons" style="justify-content: center; margin: 20px 0;">
                 <a href="#" class="share-btn whatsapp" id="successWhatsapp">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
-                </a>
-                <a href="#" class="share-btn facebook" id="successFacebook">
-                    <i class="fab fa-facebook-f"></i> Facebook
+                    <i class="fab fa-whatsapp"></i> Partager
                 </a>
             </div>
-            <button class="btn btn-primary" onclick="closeSuccessModal()">Fermer</button>
+            <button class="btn btn-close-modal" onclick="closeSuccessModal()">Fermer</button>
         </div>
     </div>
 
-    <!-- Admin Link -->
-    <a href="admin.html" class="admin-link" title="Administration">
-        <i class="fas fa-cog"></i>
-    </a>
-
-    <!-- Toast Notification -->
+    <!-- Toast -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle"></i>
         <span id="toastMessage">Copié !</span>
     </div>
+
+    <!-- Admin Link -->
+    <a href="admin.html" class="admin-link"><i class="fas fa-cog"></i></a>
 
     <script src="script.js"></script>
 </body>

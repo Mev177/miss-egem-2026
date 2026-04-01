@@ -1,164 +1,120 @@
-/* ============================================
-   MISS EGEM 2026 - JavaScript avec Firebase
-   ============================================ */
-
-// Configuration Firebase - Vous devrez créer un projet Firebase et remplacer cette config
-const firebaseConfig = {
-    apiKey: "AIzaSyDemo-REMPLACEZ-PAR-VOTRE-CLE",
-    authDomain: "miss-egem-2026.firebaseapp.com",
-    databaseURL: "https://miss-egem-2026-default-rtdb.firebaseio.com",
-    projectId: "miss-egem-2026",
-    storageBucket: "miss-egem-2026.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "1:123456789:web:abcdef123456"
+// ===== GLOBAL STATE =====
+let currentCandidate = {
+    number: 0,
+    name: ''
 };
-
-// Configuration du site
-const CONFIG = {
-    siteName: 'MISS EGEM 2026',
-    siteUrl: 'https://mev177.github.io/miss-egem-2026/',
-    pricePerVote: 100,
-    payments: {
-        orange: {
-            number: '659688759',
-            displayNumber: '659 68 87 59',
-            name: 'DJENGUE Yassine'
-        },
-        mtn: {
-            number: '683685581',
-            displayNumber: '683 68 55 81',
-            name: 'Alvarez Rychelle'
-        }
-    },
-    candidates: {
-        1: { name: 'EBI ONGONO', poste: 'MG1' },
-        2: { name: 'KOLNIKIE FLEUR', poste: 'PGE 1' },
-        3: { name: 'NGA NNANG', poste: 'RPC3' },
-        4: { name: 'MOUKAM Merciale', poste: 'PGE1' }
-    }
-};
-
-// State
-let currentCandidate = null;
 let currentAmount = 100;
 let currentVotes = 1;
-let db = null;
 
-// Initialize Firebase
-try {
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.database();
-    console.log('Firebase initialisé');
-} catch (error) {
-    console.log('Firebase non configuré - Mode local activé');
-}
+// ===== SITE URL =====
+const SITE_URL = 'https://mev177.github.io/miss-egem-2026/';
 
-// DOM Elements
-const voteModal = document.getElementById('voteModal');
-const successModal = document.getElementById('successModal');
-const mobileMenu = document.getElementById('mobileMenu');
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const toast = document.getElementById('toast');
+// ===== STORAGE KEYS =====
+const STORAGE_KEYS = {
+    votes: 'missEgem2026_votes',
+    pendingVotes: 'missEgem2026_pending'
+};
 
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    initShareLinks();
+// ===== INITIALIZATION =====
+document.addEventListener('DOMContentLoaded', function() {
     initMobileMenu();
-    loadVotesFromStorage();
-    
-    // Load votes from Firebase if available
-    if (db) {
-        loadVotesFromFirebase();
-    }
+    initShareButtons();
+    loadVotes();
 });
 
-// ============================================
-// Share Links
-// ============================================
-function initShareLinks() {
-    const shareText = `🗳️ Votez pour votre candidate préférée à MISS EGEM 2026 ! 👑\n\n100 FCFA = 1 vote\n💰 Orange Money: ${CONFIG.payments.orange.displayNumber}\n💰 MTN MoMo: ${CONFIG.payments.mtn.displayNumber}\n\nVotez maintenant :`;
-    const shareUrl = CONFIG.siteUrl;
+// ===== MOBILE MENU =====
+function initMobileMenu() {
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
     
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText + '\n' + shareUrl)}`;
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+            const icon = menuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close menu on link click
+        const mobileLinks = mobileMenu.querySelectorAll('.mobile-link');
+        mobileLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuBtn.querySelector('i').classList.remove('fa-times');
+                menuBtn.querySelector('i').classList.add('fa-bars');
+            });
+        });
+    }
+}
+
+// ===== SHARE BUTTONS =====
+function initShareButtons() {
+    const message = "🗳️ Votez pour votre candidate préférée à MISS EGEM 2026 ! 100 FCFA = 1 vote " + SITE_URL;
     
-    // Set share links
-    ['shareWhatsapp', 'footerWhatsapp', 'successWhatsapp'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.href = whatsappUrl;
-    });
+    // WhatsApp Share
+    const whatsappBtn = document.getElementById('shareWhatsapp');
+    if (whatsappBtn) {
+        whatsappBtn.href = 'https://wa.me/?text=' + encodeURIComponent(message);
+    }
     
-    ['shareFacebook', 'footerFacebook', 'successFacebook'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.href = facebookUrl;
-    });
+    // Success modal WhatsApp
+    const successWhatsapp = document.getElementById('successWhatsapp');
+    if (successWhatsapp) {
+        successWhatsapp.href = 'https://wa.me/?text=' + encodeURIComponent(message);
+    }
     
+    // Facebook Share
+    const facebookBtn = document.getElementById('shareFacebook');
+    if (facebookBtn) {
+        facebookBtn.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(SITE_URL);
+    }
+    
+    // Copy Link
     const copyBtn = document.getElementById('copyLink');
     if (copyBtn) {
-        copyBtn.addEventListener('click', () => {
-            copyToClipboard(shareUrl);
+        copyBtn.addEventListener('click', function() {
+            copyToClipboard(SITE_URL);
             showToast('Lien copié !');
         });
     }
 }
 
-// ============================================
-// Mobile Menu
-// ============================================
-function initMobileMenu() {
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active');
-            const icon = mobileMenuBtn.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
-        });
-    }
-    
-    document.querySelectorAll('.mobile-link').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            const icon = mobileMenuBtn.querySelector('i');
-            icon.classList.add('fa-bars');
-            icon.classList.remove('fa-times');
-        });
-    });
-}
-
-// ============================================
-// Vote Modal Steps
-// ============================================
-function openVoteModal(candidateNumber, candidateName) {
-    currentCandidate = {
-        number: candidateNumber,
-        name: candidateName
-    };
+// ===== VOTE MODAL =====
+function openVoteModal(number, name) {
+    currentCandidate.number = number;
+    currentCandidate.name = name;
     currentAmount = 100;
     currentVotes = 1;
     
-    // Update modal
-    document.getElementById('modalCandidateName').textContent = candidateName;
-    document.getElementById('modalCandidateNumber').textContent = candidateNumber;
+    // Update modal content
+    document.getElementById('modalCandidateName').textContent = name;
+    document.getElementById('modalCandidateNumber').textContent = number;
     document.getElementById('voteAmount').value = 100;
     document.getElementById('votesPreview').textContent = '1';
+    document.getElementById('motifText').textContent = 'MISS ' + number;
     
     // Show step 1
     showStep(1);
     
-    voteModal.classList.add('active');
+    // Show modal
+    document.getElementById('voteModal').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
 function closeVoteModal() {
-    voteModal.classList.remove('active');
+    document.getElementById('voteModal').classList.remove('active');
     document.body.style.overflow = '';
 }
 
-function showStep(stepNumber) {
-    document.querySelectorAll('.modal-step').forEach(step => {
-        step.style.display = 'none';
-    });
-    document.getElementById(`step${stepNumber}`).style.display = 'block';
+function showStep(step) {
+    document.getElementById('step1').style.display = step === 1 ? 'block' : 'none';
+    document.getElementById('step2').style.display = step === 2 ? 'block' : 'none';
+    document.getElementById('step3').style.display = step === 3 ? 'block' : 'none';
 }
 
 function goToStep1() {
@@ -166,199 +122,203 @@ function goToStep1() {
 }
 
 function goToStep2() {
-    // Update step 2 info
-    document.getElementById('step2Amount').textContent = currentAmount.toLocaleString();
+    const amount = parseInt(document.getElementById('voteAmount').value) || 100;
+    
+    if (amount < 100) {
+        alert('Le montant minimum est de 100 FCFA');
+        return;
+    }
+    
+    currentAmount = amount;
+    currentVotes = Math.floor(amount / 100);
+    
+    // Update step 2 content
+    document.getElementById('step2Amount').textContent = amount;
     document.getElementById('step2Votes').textContent = currentVotes;
-    document.getElementById('amountToSend').textContent = currentAmount.toLocaleString();
-    document.getElementById('paymentMotif').textContent = `MISS ${currentCandidate.number}`;
+    document.getElementById('amountDisplay').textContent = amount;
     
     showStep(2);
 }
 
 function goToStep3() {
     // Update summary
-    document.getElementById('summaryCandidate').textContent = `N°${currentCandidate.number} - ${currentCandidate.name}`;
-    document.getElementById('summaryAmount').textContent = `${currentAmount.toLocaleString()} FCFA`;
-    document.getElementById('summaryVotes').textContent = `${currentVotes} vote(s)`;
-    
-    // Clear phone input
-    document.getElementById('voterPhone').value = '';
+    document.getElementById('summaryCandidate').textContent = currentCandidate.name + ' (N°' + currentCandidate.number + ')';
+    document.getElementById('summaryAmount').textContent = currentAmount + ' FCFA';
+    document.getElementById('summaryVotes').textContent = currentVotes + ' vote(s)';
     
     showStep(3);
 }
 
-// ============================================
-// Amount Controls
-// ============================================
+// ===== AMOUNT CONTROLS =====
 function adjustAmount(delta) {
     const input = document.getElementById('voteAmount');
-    let newValue = parseInt(input.value) + delta;
-    if (newValue < 100) newValue = 100;
-    input.value = newValue;
-    currentAmount = newValue;
+    let value = parseInt(input.value) || 100;
+    value += delta;
+    if (value < 100) value = 100;
+    input.value = value;
     updateVotes();
 }
 
 function setAmount(amount) {
     document.getElementById('voteAmount').value = amount;
-    currentAmount = amount;
     updateVotes();
 }
 
 function updateVotes() {
-    const amount = parseInt(document.getElementById('voteAmount').value) || 100;
-    currentAmount = Math.max(100, amount);
-    document.getElementById('voteAmount').value = currentAmount;
-    currentVotes = Math.floor(currentAmount / CONFIG.pricePerVote);
-    document.getElementById('votesPreview').textContent = currentVotes;
+    const amount = parseInt(document.getElementById('voteAmount').value) || 0;
+    const votes = Math.floor(amount / 100);
+    document.getElementById('votesPreview').textContent = votes > 0 ? votes : 0;
 }
 
-// ============================================
-// Submit Vote
-// ============================================
+// ===== COPY FUNCTIONS =====
+function copyNumber(number, type) {
+    copyToClipboard(number);
+    showToast('Numéro copié !');
+}
+
+function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text);
+    } else {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+        } catch (e) {
+            console.error('Copy failed', e);
+        }
+        document.body.removeChild(textarea);
+    }
+}
+
+// ===== TOAST =====
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastMessage').textContent = message;
+    toast.classList.add('show');
+    setTimeout(function() {
+        toast.classList.remove('show');
+    }, 2500);
+}
+
+// ===== SUBMIT VOTE =====
 function submitVote() {
     const phone = document.getElementById('voterPhone').value.trim();
     
-    // Validate phone
     if (!phone || phone.length < 9) {
-        showToast('Veuillez entrer un numéro valide');
+        alert('Veuillez entrer votre numéro de téléphone (9 chiffres)');
         return;
     }
     
-    // Create vote record
-    const voteData = {
+    // Create pending vote
+    const pendingVote = {
+        id: Date.now(),
         candidateNumber: currentCandidate.number,
         candidateName: currentCandidate.name,
         amount: currentAmount,
         votes: currentVotes,
         phone: phone,
         timestamp: new Date().toISOString(),
-        status: 'pending' // pending, validated, rejected
+        status: 'pending'
     };
     
-    // Save to Firebase if available
-    if (db) {
-        saveVoteToFirebase(voteData);
-    } else {
-        // Save locally
-        saveVoteLocally(voteData);
-    }
+    // Save to pending votes
+    savePendingVote(pendingVote);
     
-    // Close vote modal and show success
+    // Close vote modal
     closeVoteModal();
-    successModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function saveVoteToFirebase(voteData) {
-    const votesRef = db.ref('pendingVotes');
-    votesRef.push(voteData)
-        .then(() => {
-            console.log('Vote enregistré dans Firebase');
-        })
-        .catch((error) => {
-            console.error('Erreur Firebase:', error);
-            saveVoteLocally(voteData);
-        });
-}
-
-function saveVoteLocally(voteData) {
-    let pendingVotes = JSON.parse(localStorage.getItem('pendingVotes') || '[]');
-    pendingVotes.push(voteData);
-    localStorage.setItem('pendingVotes', JSON.stringify(pendingVotes));
-    console.log('Vote enregistré localement');
+    
+    // Clear phone input
+    document.getElementById('voterPhone').value = '';
+    
+    // Show success modal
+    document.getElementById('successModal').classList.add('active');
 }
 
 function closeSuccessModal() {
-    successModal.classList.remove('active');
-    document.body.style.overflow = '';
+    document.getElementById('successModal').classList.remove('active');
 }
 
-// ============================================
-// Load Votes
-// ============================================
-function loadVotesFromStorage() {
-    // Load validated votes from localStorage
-    for (let i = 1; i <= 4; i++) {
-        const votes = localStorage.getItem(`validated_votes_${i}`) || '0';
-        const el = document.getElementById(`votes-${i}`);
-        if (el) el.textContent = votes;
-    }
-}
-
-function loadVotesFromFirebase() {
-    const votesRef = db.ref('validatedVotes');
-    votesRef.on('value', (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
+// ===== LOCAL STORAGE FUNCTIONS =====
+function loadVotes() {
+    try {
+        const votesData = localStorage.getItem(STORAGE_KEYS.votes);
+        if (votesData) {
+            const votes = JSON.parse(votesData);
             for (let i = 1; i <= 4; i++) {
-                const votes = data[`candidate_${i}`] || 0;
-                const el = document.getElementById(`votes-${i}`);
-                if (el) el.textContent = votes;
-                // Also save locally for offline access
-                localStorage.setItem(`validated_votes_${i}`, votes);
+                const voteCount = votes['candidate_' + i] || 0;
+                const element = document.getElementById('votes-' + i);
+                if (element) {
+                    element.textContent = voteCount;
+                }
             }
         }
-    });
-}
-
-// ============================================
-// Utility Functions
-// ============================================
-function copyToClipboard(text) {
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(text);
-    } else {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
+    } catch (e) {
+        console.error('Error loading votes:', e);
     }
 }
 
-function showToast(message) {
-    document.getElementById('toastMessage').textContent = message;
-    toast.classList.add('active');
-    setTimeout(() => {
-        toast.classList.remove('active');
-    }, 3000);
-}
-
-// Close modals on overlay click
-if (voteModal) {
-    voteModal.addEventListener('click', (e) => {
-        if (e.target === voteModal) closeVoteModal();
-    });
-}
-
-if (successModal) {
-    successModal.addEventListener('click', (e) => {
-        if (e.target === successModal) closeSuccessModal();
-    });
-}
-
-// Close on Escape
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        closeVoteModal();
-        closeSuccessModal();
-    }
-});
-
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const headerHeight = document.querySelector('.header')?.offsetHeight || 70;
-            const targetPosition = target.offsetTop - headerHeight;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
+function savePendingVote(vote) {
+    try {
+        let pending = [];
+        const data = localStorage.getItem(STORAGE_KEYS.pendingVotes);
+        if (data) {
+            pending = JSON.parse(data);
         }
-    });
-});
+        pending.push(vote);
+        localStorage.setItem(STORAGE_KEYS.pendingVotes, JSON.stringify(pending));
+    } catch (e) {
+        console.error('Error saving pending vote:', e);
+    }
+}
+
+// ===== HELPER: Get votes from storage =====
+function getVotes() {
+    try {
+        const data = localStorage.getItem(STORAGE_KEYS.votes);
+        if (data) {
+            return JSON.parse(data);
+        }
+    } catch (e) {
+        console.error('Error getting votes:', e);
+    }
+    return {
+        candidate_1: 0,
+        candidate_2: 0,
+        candidate_3: 0,
+        candidate_4: 0
+    };
+}
+
+// ===== HELPER: Save votes to storage =====
+function saveVotes(votes) {
+    try {
+        localStorage.setItem(STORAGE_KEYS.votes, JSON.stringify(votes));
+    } catch (e) {
+        console.error('Error saving votes:', e);
+    }
+}
+
+// ===== Detect Mobile OS for payment links =====
+function getMobileOS() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    
+    if (/android/i.test(userAgent)) {
+        return 'android';
+    }
+    
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return 'ios';
+    }
+    
+    return 'unknown';
+}
+
+// Info: Les liens tel: pour les USSD fonctionnent automatiquement sur Android et iOS
+// Orange Money: tel:*150*1*1*659688759# 
+// MTN MoMo: tel:*126*1*1*683685581#
