@@ -2,7 +2,6 @@
    MISS EGEM 2026 - Styles CSS
    ============================================ */
 
-/* Variables CSS */
 :root {
     --primary-color: #e91e63;
     --primary-dark: #c2185b;
@@ -12,6 +11,7 @@
     --orange-color: #ff6f00;
     --mtn-color: #ffcc00;
     --success-color: #4caf50;
+    --pending-color: #ff9800;
     --dark-color: #1a1a2e;
     --light-color: #f8f9fa;
     --text-color: #333;
@@ -26,7 +26,6 @@
     --transition: all 0.3s ease;
 }
 
-/* Reset & Base */
 * {
     margin: 0;
     padding: 0;
@@ -51,9 +50,7 @@ body {
     padding: 0 20px;
 }
 
-/* ============================================
-   Header
-   ============================================ */
+/* Header */
 .header {
     position: fixed;
     top: 0;
@@ -95,22 +92,6 @@ body {
     color: var(--text-color);
     font-weight: 500;
     transition: var(--transition);
-    position: relative;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--gradient-primary);
-    transition: var(--transition);
-}
-
-.nav-link:hover::after {
-    width: 100%;
 }
 
 .nav-link:hover {
@@ -149,18 +130,9 @@ body {
     color: var(--text-color);
     font-weight: 500;
     padding: 10px;
-    border-radius: var(--border-radius-sm);
-    transition: var(--transition);
 }
 
-.mobile-link:hover {
-    background: var(--light-color);
-    color: var(--primary-color);
-}
-
-/* ============================================
-   Hero Section
-   ============================================ */
+/* Hero */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -194,7 +166,6 @@ body {
     font-weight: 800;
     color: var(--white);
     margin-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .crown-icon {
@@ -221,10 +192,6 @@ body {
     margin-bottom: 30px;
 }
 
-.hero-info {
-    margin-bottom: 30px;
-}
-
 .info-badge {
     display: inline-flex;
     align-items: center;
@@ -236,13 +203,13 @@ body {
     color: var(--white);
     font-size: 1.2rem;
     font-weight: 600;
+    margin-bottom: 30px;
 }
 
 .info-badge i {
     color: var(--gold-color);
 }
 
-/* Hero Shapes */
 .hero-shapes {
     position: absolute;
     top: 0;
@@ -250,7 +217,6 @@ body {
     right: 0;
     bottom: 0;
     pointer-events: none;
-    overflow: hidden;
 }
 
 .shape {
@@ -288,9 +254,7 @@ body {
     50% { transform: translateY(-30px) rotate(10deg); }
 }
 
-/* ============================================
-   Buttons
-   ============================================ */
+/* Buttons */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -316,14 +280,14 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
+.btn-secondary {
+    background: var(--light-color);
+    color: var(--text-color);
+}
+
 .btn-lg {
     padding: 16px 40px;
     font-size: 1.1rem;
-}
-
-.btn-sm {
-    padding: 8px 16px;
-    font-size: 0.9rem;
 }
 
 .btn-vote {
@@ -341,17 +305,13 @@ body {
 .btn-success {
     background: var(--success-color);
     color: var(--white);
-    width: 100%;
-    justify-content: center;
 }
 
 .btn-success:hover {
     background: #43a047;
 }
 
-/* ============================================
-   Share Section
-   ============================================ */
+/* Share Section */
 .share-section {
     background: var(--white);
     padding: 20px 0;
@@ -412,9 +372,7 @@ body {
     box-shadow: var(--shadow);
 }
 
-/* ============================================
-   Section Titles
-   ============================================ */
+/* Section Titles */
 .section-title {
     font-size: 2.5rem;
     font-weight: 700;
@@ -438,9 +396,7 @@ body {
     margin-bottom: 50px;
 }
 
-/* ============================================
-   Candidates Section
-   ============================================ */
+/* Candidates */
 .candidates-section {
     padding: 80px 0;
     background: var(--light-color);
@@ -540,7 +496,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--primary-color);
     font-weight: 600;
     margin-bottom: 15px;
@@ -555,9 +511,7 @@ body {
     50% { transform: scale(1.2); }
 }
 
-/* ============================================
-   How to Vote Section
-   ============================================ */
+/* How to Vote */
 .how-to-vote {
     padding: 80px 0;
     background: var(--white);
@@ -598,7 +552,6 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 1.1rem;
 }
 
 .step-icon {
@@ -679,7 +632,6 @@ body {
     gap: 10px;
     margin-bottom: 15px;
     font-weight: 600;
-    font-size: 1.1rem;
 }
 
 .payment-card.orange .payment-logo {
@@ -690,20 +642,11 @@ body {
     color: #000;
 }
 
-.payment-logo i {
-    font-size: 1.5rem;
-}
-
-.payment-number {
-    text-align: center;
-}
-
 .payment-number strong {
     display: block;
     font-size: 1.5rem;
     color: var(--dark-color);
     margin-bottom: 5px;
-    letter-spacing: 1px;
 }
 
 .payment-name {
@@ -717,16 +660,13 @@ body {
     justify-content: center;
     gap: 10px;
     color: var(--text-light);
-    font-size: 0.95rem;
 }
 
 .payment-note i {
     color: var(--primary-color);
 }
 
-/* ============================================
-   Contact Section
-   ============================================ */
+/* Contact */
 .contact-section {
     padding: 60px 0;
     background: var(--gradient-primary);
@@ -744,7 +684,6 @@ body {
 .contact-text {
     color: rgba(255, 255, 255, 0.9);
     margin-bottom: 30px;
-    font-size: 1.1rem;
 }
 
 .contact-buttons {
@@ -772,9 +711,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* ============================================
-   Footer
-   ============================================ */
+/* Footer */
 .footer {
     background: var(--dark-color);
     padding: 40px 0;
@@ -818,18 +755,14 @@ body {
     align-items: center;
     justify-content: center;
     color: var(--white);
-    text-decoration: none;
     transition: var(--transition);
 }
 
 .footer-social a:hover {
     background: var(--primary-color);
-    transform: translateY(-3px);
 }
 
-/* ============================================
-   Modal
-   ============================================ */
+/* Modal */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -875,7 +808,7 @@ body {
     position: absolute;
     top: 15px;
     right: 15px;
-    background: var(--light-color);
+    background: rgba(255,255,255,0.2);
     border: none;
     width: 40px;
     height: 40px;
@@ -884,13 +817,13 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: var(--transition);
     z-index: 10;
+    color: white;
+    transition: var(--transition);
 }
 
 .modal-close:hover {
-    background: var(--primary-color);
-    color: var(--white);
+    background: rgba(255,255,255,0.3);
 }
 
 .modal-header {
@@ -898,6 +831,14 @@ body {
     color: var(--white);
     padding: 40px 30px;
     text-align: center;
+}
+
+.modal-header.payment-header {
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+}
+
+.modal-header.confirm-header {
+    background: linear-gradient(135deg, #4caf50, #8bc34a);
 }
 
 .modal-header i {
@@ -908,10 +849,6 @@ body {
 .modal-header h2 {
     font-size: 1.5rem;
     margin-bottom: 5px;
-}
-
-.modal-header p {
-    opacity: 0.9;
 }
 
 .modal-body {
@@ -927,7 +864,6 @@ body {
     display: block;
     font-weight: 600;
     margin-bottom: 10px;
-    color: var(--dark-color);
 }
 
 .amount-input-group {
@@ -995,7 +931,6 @@ body {
 .votes-preview {
     text-align: center;
     font-size: 1.2rem;
-    color: var(--text-color);
     padding: 15px;
     background: var(--light-color);
     border-radius: var(--border-radius-sm);
@@ -1003,7 +938,6 @@ body {
 
 .votes-preview i {
     color: var(--primary-color);
-    margin-right: 5px;
 }
 
 .votes-preview strong {
@@ -1011,114 +945,212 @@ body {
     font-size: 1.5rem;
 }
 
-/* Payment Selection */
-.payment-selection {
+/* Payment Options Large */
+.payment-choice {
     margin-bottom: 20px;
 }
 
-.payment-selection h3 {
-    font-size: 1rem;
-    margin-bottom: 15px;
-    color: var(--dark-color);
+.payment-instruction {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
 }
 
-.payment-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.payment-options-large {
+    display: flex;
+    flex-direction: column;
     gap: 15px;
+    margin-bottom: 20px;
 }
 
-.payment-option {
+.payment-option-large {
+    display: flex;
+    align-items: center;
     padding: 20px;
     border: 2px solid #eee;
     border-radius: var(--border-radius-sm);
-    background: var(--white);
     cursor: pointer;
     transition: var(--transition);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
 }
 
-.payment-option i {
-    font-size: 2rem;
-}
-
-.payment-option span {
-    font-weight: 600;
-}
-
-.payment-option small {
-    color: var(--text-light);
-    font-size: 0.85rem;
-}
-
-.payment-option.orange:hover,
-.payment-option.orange.selected {
+.payment-option-large.orange:hover {
     border-color: var(--orange-color);
     background: #fff3e0;
 }
 
-.payment-option.orange i {
-    color: var(--orange-color);
-}
-
-.payment-option.mtn:hover,
-.payment-option.mtn.selected {
+.payment-option-large.mtn:hover {
     border-color: var(--mtn-color);
     background: #fffde7;
 }
 
-.payment-option.mtn i {
-    color: #000;
-}
-
-/* Payment Instructions */
-.payment-instructions {
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.instruction-box {
-    background: var(--light-color);
-    padding: 25px;
-    border-radius: var(--border-radius-sm);
-    margin-bottom: 20px;
-}
-
-.instruction-box h4 {
+.payment-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-right: 15px;
+}
+
+.payment-option-large.orange .payment-icon {
+    background: var(--orange-color);
+    color: white;
+}
+
+.payment-option-large.mtn .payment-icon {
+    background: var(--mtn-color);
+    color: black;
+}
+
+.payment-details {
+    flex: 1;
+}
+
+.payment-type {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.payment-num {
+    display: block;
+    font-size: 1.3rem;
     color: var(--dark-color);
 }
 
-.instruction-box h4 i {
-    color: var(--primary-color);
+.payment-owner {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-light);
 }
 
-.instruction-box ol {
-    padding-left: 20px;
+.copy-btn {
+    width: 45px;
+    height: 45px;
+    border: none;
+    background: var(--light-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.instruction-box li {
-    margin-bottom: 10px;
-    color: var(--text-color);
+.copy-btn:hover {
+    background: var(--primary-color);
+    color: white;
 }
 
-.instruction-box strong {
-    color: var(--primary-color);
-}
-
-.copy-buttons {
-    margin-top: 15px;
+.payment-motif {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    padding: 15px;
+    border-radius: var(--border-radius-sm);
     text-align: center;
+    color: #856404;
+}
+
+.payment-motif i {
+    margin-right: 10px;
+}
+
+/* Phone Form */
+.phone-form {
+    margin-bottom: 25px;
+}
+
+.phone-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.phone-input-group {
+    display: flex;
+    align-items: center;
+    border: 2px solid #eee;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+}
+
+.phone-prefix {
+    padding: 15px;
+    background: var(--light-color);
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+.phone-input-group input {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    font-size: 1.2rem;
+    font-family: inherit;
+}
+
+.phone-input-group input:focus {
+    outline: none;
+}
+
+.phone-hint {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.phone-hint i {
+    color: var(--success-color);
+}
+
+/* Vote Summary */
+.vote-summary {
+    background: var(--light-color);
+    padding: 20px;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 25px;
+}
+
+.vote-summary h4 {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vote-summary h4 i {
+    color: var(--primary-color);
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-item strong {
+    color: var(--primary-color);
+}
+
+/* Step Buttons */
+.step-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.step-buttons .btn {
+    flex: 1;
+    justify-content: center;
 }
 
 /* Success Modal */
@@ -1137,6 +1169,10 @@ body {
     justify-content: center;
     margin: 0 auto 25px;
     animation: successPop 0.5s ease;
+}
+
+.success-icon.pending {
+    background: var(--pending-color);
 }
 
 @keyframes successPop {
@@ -1161,6 +1197,14 @@ body {
     margin-bottom: 10px;
 }
 
+.success-note {
+    background: #e3f2fd;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: #1565c0 !important;
+    display: inline-block;
+}
+
 .share-prompt {
     font-weight: 600;
     color: var(--dark-color) !important;
@@ -1170,6 +1214,28 @@ body {
 .success-modal .share-buttons {
     justify-content: center;
     margin-bottom: 25px;
+}
+
+/* Admin Link */
+.admin-link {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: var(--dark-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    opacity: 0.3;
+    transition: var(--transition);
+}
+
+.admin-link:hover {
+    opacity: 1;
 }
 
 /* Toast */
@@ -1198,9 +1264,7 @@ body {
     color: var(--success-color);
 }
 
-/* ============================================
-   Responsive
-   ============================================ */
+/* Responsive */
 @media (max-width: 768px) {
     .nav {
         display: none;
@@ -1214,14 +1278,6 @@ body {
         font-size: 2.2rem;
     }
     
-    .hero-subtitle {
-        font-size: 1.1rem;
-    }
-    
-    .hero-tagline {
-        font-size: 1.3rem;
-    }
-    
     .section-title {
         font-size: 1.8rem;
     }
@@ -1230,28 +1286,8 @@ body {
         grid-template-columns: 1fr;
     }
     
-    .candidate-image {
-        height: 300px;
-    }
-    
-    .payment-options {
-        grid-template-columns: 1fr;
-    }
-    
-    .share-section .container {
+    .step-buttons {
         flex-direction: column;
-    }
-    
-    .modal {
-        margin: 20px;
-    }
-    
-    .modal-header {
-        padding: 30px 20px;
-    }
-    
-    .modal-body {
-        padding: 20px;
     }
 }
 
@@ -1260,96 +1296,12 @@ body {
         font-size: 1.8rem;
     }
     
-    .info-badge {
-        padding: 12px 20px;
-        font-size: 1rem;
-    }
-    
-    .btn-lg {
-        padding: 14px 30px;
-        font-size: 1rem;
+    .modal-body {
+        padding: 20px;
     }
     
     .quick-amounts button {
         padding: 8px 15px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 }
-
-/* ============================================
-   Pay Now Button
-   ============================================ */
-.btn-pay {
-    background: linear-gradient(135deg, #00c853, #00e676);
-    color: var(--white);
-    width: 100%;
-    justify-content: center;
-    font-size: 1.3rem;
-    padding: 20px 40px;
-    margin-bottom: 20px;
-    animation: pulseGlow 2s infinite;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-pay:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(0, 200, 83, 0.5);
-}
-
-@keyframes pulseGlow {
-    0%, 100% {
-        box-shadow: 0 5px 20px rgba(0, 200, 83, 0.4);
-    }
-    50% {
-        box-shadow: 0 5px 30px rgba(0, 200, 83, 0.8);
-    }
-}
-
-/* Payment Reminder */
-.payment-reminder {
-    margin-bottom: 20px;
-    animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.reminder-box {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    border: 2px solid #2196f3;
-    border-radius: var(--border-radius-sm);
-    padding: 20px;
-}
-
-.reminder-box h4 {
-    color: #1565c0;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.reminder-info p {
-    margin: 8px 0;
-    font-size: 1.1rem;
-}
-
-.reminder-info strong {
-    color: var(--dark-color);
-}
-
-.reminder-info span {
-    color: #1565c0;
-    font-weight: 600;
-}
-

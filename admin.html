@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - MISS EGEM 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .header i {
+            color: #ffd700;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card.candidate-1 { border-top: 4px solid #e91e63; }
+        .stat-card.candidate-2 { border-top: 4px solid #9c27b0; }
+        .stat-card.candidate-3 { border-top: 4px solid #2196f3; }
+        .stat-card.candidate-4 { border-top: 4px solid #4caf50; }
+        
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .votes {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .stat-card .name {
+            font-size: 1.1rem;
+            color: #e91e63;
+            margin-top: 5px;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .section h2 i {
+            color: #e91e63;
+        }
+        
+        .pending-count {
+            background: #ff5722;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+        
+        .vote-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .vote-item:hover {
+            background: #f9f9f9;
+        }
+        
+        .vote-info {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .vote-info strong {
+            color: #e91e63;
+        }
+        
+        .vote-info p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .vote-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-validate {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .btn-validate:hover {
+            background: #43a047;
+        }
+        
+        .btn-reject {
+            background: #f44336;
+            color: white;
+        }
+        
+        .btn-reject:hover {
+            background: #e53935;
+        }
+        
+        .btn-add {
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+        }
+        
+        .add-form {
+            display: none;
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .add-form.active {
+            display: block;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #e91e63;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+        
+        .back-link:hover {
+            opacity: 1;
+        }
+        
+        .refresh-btn {
+            background: #2196f3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background: #fff3e0;
+            color: #ff9800;
+        }
+        
+        .status-validated {
+            background: #e8f5e9;
+            color: #4caf50;
+        }
+        
+        @media (max-width: 768px) {
+            .vote-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .vote-actions {
+                width: 100%;
+            }
+            
+            .vote-actions .btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Retour au site
+        </a>
+        <h1><i class="fas fa-crown"></i> Administration MISS EGEM 2026</h1>
+        <p>Gérez les votes et validez les paiements</p>
+    </header>
+    
+    <div class="container">
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card candidate-1">
+                <h3>Candidate N°1</h3>
+                <div class="votes" id="admin-votes-1">0</div>
+                <div class="name">EBI ONGONO</div>
+            </div>
+            <div class="stat-card candidate-2">
+                <h3>Candidate N°2</h3>
+                <div class="votes" id="admin-votes-2">0</div>
+                <div class="name">KOLNIKIE FLEUR</div>
+            </div>
+            <div class="stat-card candidate-3">
+                <h3>Candidate N°3</h3>
+                <div class="votes" id="admin-votes-3">0</div>
+                <div class="name">NGA NNANG</div>
+            </div>
+            <div class="stat-card candidate-4">
+                <h3>Candidate N°4</h3>
+                <div class="votes" id="admin-votes-4">0</div>
+                <div class="name">MOUKAM Merciale</div>
+            </div>
+        </div>
+        
+        <!-- Add Votes Manually -->
+        <div class="section">
+            <h2><i class="fas fa-plus-circle"></i> Ajouter des votes manuellement</h2>
+            <p style="color: #666; margin-bottom: 15px;">Après avoir vérifié un paiement reçu sur votre téléphone, ajoutez les votes ici :</p>
+            
+            <button class="btn btn-add" onclick="toggleAddForm()">
+                <i class="fas fa-plus"></i> Ajouter des votes
+            </button>
+            
+            <div class="add-form" id="addForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Candidate</label>
+                        <select id="addCandidate">
+                            <option value="1">N°1 - EBI ONGONO</option>
+                            <option value="2">N°2 - KOLNIKIE FLEUR</option>
+                            <option value="3">N°3 - NGA NNANG</option>
+                            <option value="4">N°4 - MOUKAM Merciale</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Montant reçu (FCFA)</label>
+                        <input type="number" id="addAmount" placeholder="Ex: 500" min="100" step="100">
+                    </div>
+                    <div class="form-group">
+                        <label>Numéro du payeur</label>
+                        <input type="tel" id="addPhone" placeholder="6XXXXXXXX">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Mode de paiement</label>
+                        <select id="addPaymentMethod">
+                            <option value="orange">Orange Money</option>
+                            <option value="mtn">MTN MoMo</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button class="btn btn-validate" onclick="addVotesManually()" style="width: 100%;">
+                            <i class="fas fa-check"></i> Valider et ajouter les votes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pending Votes -->
+        <div class="section">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-hourglass-half"></i> Votes en attente
+                    <span class="pending-count" id="pendingCount">0</span>
+                </h2>
+                <button class="refresh-btn" onclick="loadPendingVotes()">
+                    <i class="fas fa-sync-alt"></i> Actualiser
+                </button>
+            </div>
+            
+            <div id="pendingVotesList">
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Aucun vote en attente</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Instructions -->
+        <div class="section">
+            <h2><i class="fas fa-info-circle"></i> Comment valider les votes ?</h2>
+            <ol style="padding-left: 20px; color: #666; line-height: 2;">
+                <li>Vérifiez les SMS de paiement reçus sur vos téléphones :<br>
+                    <strong>Orange:</strong> 659 68 87 59 | <strong>MTN:</strong> 683 68 55 81</li>
+                <li>Comparez le numéro et le montant avec les votes en attente</li>
+                <li>Cliquez sur <strong style="color: #4caf50;">✓ Valider</strong> pour ajouter les votes</li>
+                <li>Ou utilisez le formulaire ci-dessus pour ajouter manuellement</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        // Load votes on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadVotes();
+            loadPendingVotes();
+        });
+        
+        function loadVotes() {
+            for (let i = 1; i <= 4; i++) {
+                const votes = localStorage.getItem(`validated_votes_${i}`) || '0';
+                document.getElementById(`admin-votes-${i}`).textContent = votes;
+            }
+        }
+        
+        function loadPendingVotes() {
+            const pendingVotes = JSON.parse(localStorage.getItem('pendingVotes') || '[]');
+            const container = document.getElementById('pendingVotesList');
+            const countEl = document.getElementById('pendingCount');
+            
+            countEl.textContent = pendingVotes.length;
+            
+            if (pendingVotes.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>Aucun vote en attente</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = pendingVotes.map((vote, index) => `
+                <div class="vote-item" data-index="${index}">
+                    <div class="vote-info">
+                        <p><strong>Candidate N°${vote.candidateNumber}</strong> - ${vote.candidateName}</p>
+                        <p><i class="fas fa-phone"></i> ${vote.phone} | <i class="fas fa-coins"></i> ${vote.amount} FCFA = ${vote.votes} vote(s)</p>
+                        <p><i class="fas fa-clock"></i> ${new Date(vote.timestamp).toLocaleString('fr-FR')}</p>
+                    </div>
+                    <span class="status-badge status-pending">En attente</span>
+                    <div class="vote-actions">
+                        <button class="btn btn-validate" onclick="validateVote(${index})">
+                            <i class="fas fa-check"></i> Valider
+                        </button>
+                        <button class="btn btn-reject" onclick="rejectVote(${index})">
+                            <i class="fas fa-times"></i> Rejeter
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function validateVote(index) {
+            const pendingVotes = JSON.parse(localStorage.getItem('pendingVotes') || '[]');
+            const vote = pendingVotes[index];
+            
+            if (!vote) return;
+            
+            // Add votes to candidate
+            const candidateKey = `validated_votes_${vote.candidateNumber}`;
+            const currentVotes = parseInt(localStorage.getItem(candidateKey) || '0');
+            const newVotes = currentVotes + vote.votes;
+            localStorage.setItem(candidateKey, newVotes);
+            
+            // Remove from pending
+            pendingVotes.splice(index, 1);
+            localStorage.setItem('pendingVotes', JSON.stringify(pendingVotes));
+            
+            // Reload
+            loadVotes();
+            loadPendingVotes();
+            
+            alert(`✅ ${vote.votes} vote(s) ajouté(s) pour ${vote.candidateName} !`);
+        }
+        
+        function rejectVote(index) {
+            if (!confirm('Êtes-vous sûr de vouloir rejeter ce vote ?')) return;
+            
+            const pendingVotes = JSON.parse(localStorage.getItem('pendingVotes') || '[]');
+            pendingVotes.splice(index, 1);
+            localStorage.setItem('pendingVotes', JSON.stringify(pendingVotes));
+            
+            loadPendingVotes();
+        }
+        
+        function toggleAddForm() {
+            document.getElementById('addForm').classList.toggle('active');
+        }
+        
+        function addVotesManually() {
+            const candidate = document.getElementById('addCandidate').value;
+            const amount = parseInt(document.getElementById('addAmount').value);
+            const phone = document.getElementById('addPhone').value;
+            
+            if (!amount || amount < 100) {
+                alert('Veuillez entrer un montant valide (minimum 100 FCFA)');
+                return;
+            }
+            
+            const votes = Math.floor(amount / 100);
+            const candidateNames = {
+                '1': 'EBI ONGONO',
+                '2': 'KOLNIKIE FLEUR', 
+                '3': 'NGA NNANG',
+                '4': 'MOUKAM Merciale'
+            };
+            
+            // Add votes
+            const candidateKey = `validated_votes_${candidate}`;
+            const currentVotes = parseInt(localStorage.getItem(candidateKey) || '0');
+            localStorage.setItem(candidateKey, currentVotes + votes);
+            
+            // Clear form
+            document.getElementById('addAmount').value = '';
+            document.getElementById('addPhone').value = '';
+            
+            // Reload
+            loadVotes();
+            
+            alert(`✅ ${votes} vote(s) ajouté(s) pour ${candidateNames[candidate]} !`);
+        }
+    </script>
+</body>
+</html>
