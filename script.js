@@ -54,7 +54,7 @@ function initMobileMenu() {
 
 // ===== SHARE BUTTONS =====
 function initShareButtons() {
-    const message = "🗳️ Votez pour votre candidate préférée à MISS EGEM 2026 ! 100 FCFA = 1 vote " + SITE_URL;
+    const message = "🗳️ Votez pour vos favoris à MISS & MISTER EGEM 2026 ! 100 FCFA = 1 vote " + SITE_URL;
     
     // WhatsApp Share
     const whatsappBtn = document.getElementById('shareWhatsapp');
@@ -250,7 +250,7 @@ function loadVotes() {
         const votesData = localStorage.getItem(STORAGE_KEYS.votes);
         if (votesData) {
             const votes = JSON.parse(votesData);
-            for (let i = 1; i <= 4; i++) {
+            for (let i = 1; i <= 9; i++) {
                 const voteCount = votes['candidate_' + i] || 0;
                 const element = document.getElementById('votes-' + i);
                 if (element) {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - MISS EGEM 2026</title>
+    <title>Admin - MISS & MISTER EGEM 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -83,6 +83,9 @@
             font-size: 0.85rem;
             margin-top: 5px;
             opacity: 0.9;
+        }
+        .stat-card.mister {
+            background: linear-gradient(135deg, #1565c0, #1976d2);
         }
         
         /* Pending Votes */
@@ -330,7 +333,7 @@
 
     <header class="header">
         <h1>
-            <i class="fas fa-cog"></i> Admin - MISS EGEM 2026
+            <i class="fas fa-cog"></i> Admin - MISS & MISTER EGEM 2026
             <span class="notification-badge hidden" id="pendingBadge">0</span>
             <span class="notification-bell" id="notifBell" onclick="requestNotifPermission()">
                 <i class="fas fa-bell"></i>
@@ -349,7 +352,7 @@
         <!-- Candidates Stats -->
         <div class="section">
             <h2 class="section-title">
-                <i class="fas fa-chart-bar"></i> Votes par candidate
+                <i class="fas fa-female"></i> Votes MISS
             </h2>
             <div class="candidates-stats">
                 <div class="stat-card">
@@ -375,6 +378,40 @@
             </div>
         </div>
 
+        <!-- MISTER Stats -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-male"></i> Votes MISTER
+            </h2>
+            <div class="candidates-stats mister-stats">
+                <div class="stat-card mister">
+                    <h3>N°1</h3>
+                    <div class="number" id="stat-5">0</div>
+                    <div class="name">YOMBI BOUTIFIN Jean</div>
+                </div>
+                <div class="stat-card mister">
+                    <h3>N°2</h3>
+                    <div class="number" id="stat-6">0</div>
+                    <div class="name">MBAMA ASSANGA</div>
+                </div>
+                <div class="stat-card mister">
+                    <h3>N°3</h3>
+                    <div class="number" id="stat-7">0</div>
+                    <div class="name">NTIEGE EWANE</div>
+                </div>
+                <div class="stat-card mister">
+                    <h3>N°4</h3>
+                    <div class="number" id="stat-8">0</div>
+                    <div class="name">KEUBOU</div>
+                </div>
+                <div class="stat-card mister">
+                    <h3>N°5</h3>
+                    <div class="number" id="stat-9">0</div>
+                    <div class="name">BANGMO Amos</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Pending Votes -->
         <div class="section">
             <h2 class="section-title">
@@ -395,12 +432,21 @@
             </h2>
             <div class="add-form">
                 <div class="form-group">
-                    <label>Candidate</label>
+                    <label>Candidat(e)</label>
                     <select id="addCandidate">
-                        <option value="1">N°1 - EBI ONGONO</option>
-                        <option value="2">N°2 - KOLNIKIE FLEUR</option>
-                        <option value="3">N°3 - NGA NNANG</option>
-                        <option value="4">N°4 - MOUKAM Merciale</option>
+                        <optgroup label="MISS">
+                            <option value="1">Miss N°1 - EBI ONGONO</option>
+                            <option value="2">Miss N°2 - KOLNIKIE FLEUR</option>
+                            <option value="3">Miss N°3 - NGA NNANG</option>
+                            <option value="4">Miss N°4 - MOUKAM Merciale</option>
+                        </optgroup>
+                        <optgroup label="MISTER">
+                            <option value="5">Mister N°1 - YOMBI BOUTIFIN Jean</option>
+                            <option value="6">Mister N°2 - MBAMA ASSANGA</option>
+                            <option value="7">Mister N°3 - NTIEGE EWANE</option>
+                            <option value="8">Mister N°4 - KEUBOU</option>
+                            <option value="9">Mister N°5 - BANGMO Amos</option>
+                        </optgroup>
                     </select>
                 </div>
                 <div class="form-group">
@@ -505,7 +551,7 @@
             
             // Browser notification
             if (notifPermission && 'Notification' in window) {
-                new Notification('MISS EGEM 2026', {
+                new Notification('MISS & MISTER EGEM 2026', {
                     body: 'Nouveau vote pour ' + vote.candidateName + ' (' + vote.amount + ' FCFA)',
                     icon: 'https://mev177.github.io/miss-egem-2026/candidate%20n%C2%B01.jpeg'
                 });
@@ -555,7 +601,7 @@
         // Load stats
         function loadStats() {
             const votes = getVotes();
-            for (let i = 1; i <= 4; i++) {
+            for (let i = 1; i <= 9; i++) {
                 const el = document.getElementById('stat-' + i);
                 if (el) {
                     el.textContent = votes['candidate_' + i] || 0;

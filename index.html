@@ -7,12 +7,12 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#e91e63">
     
-    <title>MISS EGEM 2026 - Vote en ligne</title>
-    <meta name="description" content="Votez pour votre candidate préférée à l'élection MISS EGEM 2026. 100 FCFA = 1 vote via Orange Money ou MTN Mobile Money.">
+    <title>MISS & MISTER EGEM 2026 - Vote en ligne</title>
+    <meta name="description" content="Votez pour vos candidats préférés à l'élection MISS & MISTER EGEM 2026. 100 FCFA = 1 vote via Orange Money ou MTN Mobile Money.">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="MISS EGEM 2026 - Vote en ligne">
-    <meta property="og:description" content="Votez pour votre candidate préférée ! 100 FCFA = 1 vote">
+    <meta property="og:title" content="MISS & MISTER EGEM 2026 - Vote en ligne">
+    <meta property="og:description" content="Votez pour vos favoris ! 100 FCFA = 1 vote">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mev177.github.io/miss-egem-2026/">
     
@@ -28,10 +28,11 @@
         <div class="container">
             <div class="logo">
                 <i class="fas fa-crown"></i>
-                <span>MISS EGEM 2026</span>
+                <span>MISS & MISTER EGEM 2026</span>
             </div>
             <nav class="nav">
-                <a href="#candidates" class="nav-link">Candidates</a>
+                <a href="#candidates" class="nav-link">Miss</a>
+                <a href="#misters" class="nav-link">Mister</a>
                 <a href="#how-to-vote" class="nav-link">Comment voter</a>
             </nav>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -42,7 +43,8 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#candidates" class="mobile-link">Candidates</a>
+        <a href="#candidates" class="mobile-link">Miss</a>
+        <a href="#misters" class="mobile-link">Mister</a>
         <a href="#how-to-vote" class="mobile-link">Comment voter</a>
         <a href="#contact" class="mobile-link">Contact</a>
     </div>
@@ -53,10 +55,10 @@
         <div class="hero-content">
             <h1 class="hero-title">
                 <span class="crown-icon"><i class="fas fa-crown"></i></span>
-                MISS EGEM 2026
+                MISS & MISTER EGEM 2026
             </h1>
-            <p class="hero-subtitle">Élection de la plus belle étudiante de l'EGEM</p>
-            <p class="hero-tagline">🗳️ Votez pour votre favorite !</p>
+            <p class="hero-subtitle">Élection des plus beaux étudiants de l'EGEM</p>
+            <p class="hero-tagline">🗳️ Votez pour vos favoris !</p>
             <div class="hero-info">
                 <div class="info-badge">
                     <i class="fas fa-coins"></i>
@@ -64,7 +66,7 @@
                 </div>
             </div>
             <a href="#candidates" class="btn btn-primary btn-lg">
-                <i class="fas fa-vote-yea"></i> Voir les candidates
+                <i class="fas fa-vote-yea"></i> Voir les candidats
             </a>
         </div>
     </section>
@@ -171,6 +173,118 @@
                             <span id="votes-4">0</span> votes
                         </div>
                         <button class="btn btn-vote" onclick="openVoteModal(4, 'MOUKAM Merciale')">
+                            <i class="fas fa-vote-yea"></i> Voter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MISTER Candidates Section -->
+    <section class="candidates-section misters-section" id="misters">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-male"></i>
+                Candidats MISTER
+            </h2>
+            
+            <div class="candidates-grid">
+                <!-- Candidat 1 -->
+                <div class="candidate-card">
+                    <div class="candidate-image">
+                        <img src="candidat N°1.jpeg" alt="YOMBI BOUTIFIN Jean">
+                        <div class="candidate-number mister">N°1</div>
+                    </div>
+                    <div class="candidate-info">
+                        <h3 class="candidate-name">YOMBI BOUTIFIN Jean</h3>
+                        <span class="candidate-poste mister">RPC 1</span>
+                        <p class="candidate-description">Je participe à l'événement Miss/Misters EGEM 2026</p>
+                        <div class="candidate-votes mister">
+                            <i class="fas fa-star"></i>
+                            <span id="votes-5">0</span> votes
+                        </div>
+                        <button class="btn btn-vote mister" onclick="openVoteModal(5, 'YOMBI BOUTIFIN Jean')">
+                            <i class="fas fa-vote-yea"></i> Voter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Candidat 2 -->
+                <div class="candidate-card">
+                    <div class="candidate-image">
+                        <img src="candidat N°2.jpeg" alt="MBAMA ASSANGA">
+                        <div class="candidate-number mister">N°2</div>
+                    </div>
+                    <div class="candidate-info">
+                        <h3 class="candidate-name">MBAMA ASSANGA</h3>
+                        <span class="candidate-poste mister">GM 1</span>
+                        <p class="candidate-description">Je participe à l'événement Miss/Misters EGEM 2026</p>
+                        <div class="candidate-votes mister">
+                            <i class="fas fa-star"></i>
+                            <span id="votes-6">0</span> votes
+                        </div>
+                        <button class="btn btn-vote mister" onclick="openVoteModal(6, 'MBAMA ASSANGA')">
+                            <i class="fas fa-vote-yea"></i> Voter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Candidat 3 -->
+                <div class="candidate-card">
+                    <div class="candidate-image">
+                        <img src="candidat N°3.jpeg" alt="NTIEGE EWANE">
+                        <div class="candidate-number mister">N°3</div>
+                    </div>
+                    <div class="candidate-info">
+                        <h3 class="candidate-name">NTIEGE EWANE</h3>
+                        <span class="candidate-poste mister">CGG 1</span>
+                        <p class="candidate-description">Je participe à l'événement Miss/Misters EGEM 2026</p>
+                        <div class="candidate-votes mister">
+                            <i class="fas fa-star"></i>
+                            <span id="votes-7">0</span> votes
+                        </div>
+                        <button class="btn btn-vote mister" onclick="openVoteModal(7, 'NTIEGE EWANE')">
+                            <i class="fas fa-vote-yea"></i> Voter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Candidat 4 -->
+                <div class="candidate-card">
+                    <div class="candidate-image">
+                        <img src="candidat N°4.jpeg" alt="KEUBOU">
+                        <div class="candidate-number mister">N°4</div>
+                    </div>
+                    <div class="candidate-info">
+                        <h3 class="candidate-name">KEUBOU</h3>
+                        <span class="candidate-poste mister">GM 1</span>
+                        <p class="candidate-description">Je participe à l'événement Miss/Misters EGEM 2026</p>
+                        <div class="candidate-votes mister">
+                            <i class="fas fa-star"></i>
+                            <span id="votes-8">0</span> votes
+                        </div>
+                        <button class="btn btn-vote mister" onclick="openVoteModal(8, 'KEUBOU')">
+                            <i class="fas fa-vote-yea"></i> Voter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Candidat 5 -->
+                <div class="candidate-card">
+                    <div class="candidate-image">
+                        <img src="candidat N°5.jpeg" alt="BANGMO Amos">
+                        <div class="candidate-number mister">N°5</div>
+                    </div>
+                    <div class="candidate-info">
+                        <h3 class="candidate-name">BANGMO Amos</h3>
+                        <span class="candidate-poste mister">GM 1</span>
+                        <p class="candidate-description">Je participe à l'événement Miss/Misters EGEM 2026</p>
+                        <div class="candidate-votes mister">
+                            <i class="fas fa-star"></i>
+                            <span id="votes-9">0</span> votes
+                        </div>
+                        <button class="btn btn-vote mister" onclick="openVoteModal(9, 'BANGMO Amos')">
                             <i class="fas fa-vote-yea"></i> Voter
                         </button>
                     </div>
