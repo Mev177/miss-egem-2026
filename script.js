@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initShareButtons();
     initCharts();
     loadVotesFromFirebase();
+    checkFirebaseConnection();
 });
 
 // ===== MOBILE MENU =====
@@ -291,11 +292,39 @@ function closeSuccessModal() {
 }
 
 // ===== FIREBASE: LOAD VOTES IN REAL-TIME =====
+let firebaseConnected = false;
+let votesLoaded = false;
+
 function loadVotesFromFirebase() {
+    // Show loading state
+    for (let i = 1; i <= 30; i++) {
+        const element = document.getElementById('votes-' + i);
+        if (element && !votesLoaded) {
+            element.textContent = '...';
+        }
+    }
+    
+    // Check connection status first
+    database.ref('.info/connected').on('value', function(snapshot) {
+        firebaseConnected = snapshot.val() === true;
+        console.log('Firebase connecté:', firebaseConnected);
+        
+        if (!firebaseConnected) {
+            // Try to reconnect after 3 seconds
+            setTimeout(function() {
+                if (!votesLoaded) {
+                    console.log('Tentative de reconnexion...');
+                    database.goOnline();
+                }
+            }, 3000);
+        }
+    });
+    
     // Listen for confirmed votes in real-time
     database.ref('confirmedVotes').on('value', function(snapshot) {
         const votes = snapshot.val() || {};
         console.log('Votes chargés:', votes);
+        votesLoaded = true;
         
         // Update all candidate vote counts
         for (let i = 1; i <= 30; i++) {
@@ -307,6 +336,33 @@ function loadVotesFromFirebase() {
         }
     }, function(error) {
         console.error('Erreur Firebase:', error);
+        // Show error and retry
+        for (let i = 1; i <= 30; i++) {
+            const element = document.getElementById('votes-' + i);
+            if (element) {
+                element.textContent = '!';
+            }
+        }
+        // Retry after 5 seconds
+        setTimeout(loadVotesFromFirebase, 5000);
+    });
+}
+
+// Force refresh votes (can be called manually)
+function refreshVotes() {
+    votesLoaded = false;
+    database.ref('confirmedVotes').once('value').then(function(snapshot) {
+        const votes = snapshot.val() || {};
+        votesLoaded = true;
+        for (let i = 1; i <= 30; i++) {
+            const voteCount = votes['candidate_' + i] || 0;
+            const element = document.getElementById('votes-' + i);
+            if (element) {
+                element.textContent = voteCount;
+            }
+        }
+    }).catch(function(error) {
+        console.error('Erreur refresh:', error);
     });
 }
 
@@ -315,6 +371,9 @@ function checkFirebaseConnection() {
     database.ref('.info/connected').on('value', function(snapshot) {
         if (snapshot.val() === true) {
             console.log('Connecté à Firebase');
+            if (!votesLoaded) {
+                refreshVotes();
+            }
         } else {
             console.log('Déconnecté de Firebase');
         }
