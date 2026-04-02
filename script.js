@@ -295,14 +295,28 @@ function loadVotesFromFirebase() {
     // Listen for confirmed votes in real-time
     database.ref('confirmedVotes').on('value', function(snapshot) {
         const votes = snapshot.val() || {};
+        console.log('Votes chargés:', votes);
         
         // Update all candidate vote counts
-        for (let i = 1; i <= 20; i++) {
+        for (let i = 1; i <= 30; i++) {
             const voteCount = votes['candidate_' + i] || 0;
             const element = document.getElementById('votes-' + i);
             if (element) {
                 element.textContent = voteCount;
             }
+        }
+    }, function(error) {
+        console.error('Erreur Firebase:', error);
+    });
+}
+
+// Retry connection if offline
+function checkFirebaseConnection() {
+    database.ref('.info/connected').on('value', function(snapshot) {
+        if (snapshot.val() === true) {
+            console.log('Connecté à Firebase');
+        } else {
+            console.log('Déconnecté de Firebase');
         }
     });
 }

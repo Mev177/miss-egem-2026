@@ -9,11 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Poppins', sans-serif;
@@ -22,13 +18,9 @@
             color: #fff;
         }
         
-        /* Login Screen */
         .login-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             display: flex;
             align-items: center;
@@ -36,9 +28,7 @@
             z-index: 9999;
         }
         
-        .login-overlay.hidden {
-            display: none;
-        }
+        .login-overlay.hidden { display: none; }
         
         .login-box {
             background: rgba(255,255,255,0.05);
@@ -50,16 +40,8 @@
             width: 90%;
         }
         
-        .login-box .logo {
-            font-size: 3rem;
-            color: #d4a017;
-            margin-bottom: 1rem;
-        }
-        
-        .login-box h2 {
-            margin-bottom: 2rem;
-            color: #d4a017;
-        }
+        .login-box .logo { font-size: 3rem; color: #d4a017; margin-bottom: 1rem; }
+        .login-box h2 { margin-bottom: 2rem; color: #d4a017; }
         
         .login-box input {
             width: 100%;
@@ -72,9 +54,7 @@
             margin-bottom: 1rem;
         }
         
-        .login-box input::placeholder {
-            color: #888;
-        }
+        .login-box input::placeholder { color: #888; }
         
         .login-box button {
             width: 100%;
@@ -94,19 +74,16 @@
             box-shadow: 0 4px 20px rgba(212, 160, 23, 0.4);
         }
         
-        .login-error {
-            color: #dc3545;
-            margin-bottom: 1rem;
-            display: none;
-        }
+        .login-error { color: #dc3545; margin-bottom: 1rem; display: none; }
         
-        /* Header */
         .header {
             background: rgba(0,0,0,0.3);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
             border-bottom: 1px solid rgba(212, 160, 23, 0.3);
         }
         
@@ -116,7 +93,7 @@
             gap: 10px;
             color: #d4a017;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         
         .back-btn {
@@ -131,52 +108,31 @@
             transition: all 0.3s;
         }
         
-        .back-btn:hover {
-            background: #d4a017;
-            color: #1a1a2e;
-        }
+        .back-btn:hover { background: #d4a017; color: #1a1a2e; }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
         
-        /* Stats */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
             margin-bottom: 2rem;
         }
         
         .stat-card {
             background: rgba(255,255,255,0.05);
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: 1.2rem;
             text-align: center;
             border: 1px solid rgba(212, 160, 23, 0.2);
         }
         
-        .stat-card i {
-            font-size: 2rem;
-            color: #d4a017;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #d4a017;
-        }
-        
-        .stat-label {
-            color: #888;
-            font-size: 0.9rem;
-        }
+        .stat-card i { font-size: 1.5rem; color: #d4a017; margin-bottom: 0.5rem; }
+        .stat-value { font-size: 1.8rem; font-weight: 700; color: #d4a017; }
+        .stat-label { color: #888; font-size: 0.85rem; }
         
         .section-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-bottom: 1rem;
             color: #d4a017;
             display: flex;
@@ -184,11 +140,10 @@
             gap: 10px;
         }
         
-        /* Pending votes */
         .pending-votes {
             background: rgba(255,255,255,0.05);
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: 1rem;
             border: 1px solid rgba(212, 160, 23, 0.2);
         }
         
@@ -196,79 +151,47 @@
             background: rgba(0,0,0,0.3);
             border-radius: 12px;
             padding: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.8rem;
         }
         
-        .vote-info {
-            flex: 1;
-            min-width: 200px;
-        }
+        .vote-info { flex: 1; min-width: 200px; }
+        .vote-candidate { font-weight: 600; color: #d4a017; font-size: 1rem; }
+        .vote-details { color: #888; font-size: 0.85rem; margin-top: 4px; }
+        .vote-details span { margin-right: 12px; display: inline-block; }
         
-        .vote-candidate {
-            font-weight: 600;
-            color: #d4a017;
-            font-size: 1.1rem;
-        }
-        
-        .vote-details {
-            color: #888;
-            font-size: 0.9rem;
-            margin-top: 4px;
-        }
-        
-        .vote-details span {
-            margin-right: 15px;
-        }
-        
-        .vote-actions {
-            display: flex;
-            gap: 10px;
-        }
+        .vote-actions { display: flex; gap: 8px; flex-wrap: wrap; }
         
         .btn {
-            padding: 10px 20px;
+            padding: 8px 16px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             font-weight: 500;
+            font-size: 0.9rem;
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         
-        .btn-validate {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-        }
+        .btn-validate { background: linear-gradient(135deg, #28a745, #20c997); color: white; }
+        .btn-validate:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4); }
         
-        .btn-validate:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
-        }
-        
-        .btn-reject {
-            background: linear-gradient(135deg, #dc3545, #c82333);
-            color: white;
-        }
-        
-        .btn-reject:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
-        }
+        .btn-reject { background: linear-gradient(135deg, #dc3545, #c82333); color: white; }
+        .btn-reject:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4); }
         
         .btn-validate-all {
             background: linear-gradient(135deg, #d4a017, #f4c430);
             color: #1a1a2e;
             font-size: 1rem;
             padding: 12px 24px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         
         .btn-validate-all:hover {
@@ -276,17 +199,8 @@
             box-shadow: 0 4px 20px rgba(212, 160, 23, 0.4);
         }
         
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: #888;
-        }
-        
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            color: #444;
-        }
+        .empty-state { text-align: center; padding: 2rem; color: #888; }
+        .empty-state i { font-size: 3rem; margin-bottom: 1rem; color: #444; }
         
         .toast {
             position: fixed;
@@ -304,77 +218,59 @@
             z-index: 1000;
         }
         
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        
+        .loading { text-align: center; padding: 2rem; color: #888; }
+        .loading i { font-size: 2rem; animation: spin 1s linear infinite; }
+        
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        .connection-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #888;
-        }
+        .connection-status.online { background: rgba(40, 167, 69, 0.2); color: #28a745; }
+        .connection-status.offline { background: rgba(220, 53, 69, 0.2); color: #dc3545; }
         
-        .loading i {
-            font-size: 2rem;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Responsive */
         @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            .vote-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .vote-actions {
-                width: 100%;
-            }
-            
-            .vote-actions .btn {
-                flex: 1;
-                justify-content: center;
-            }
+            .header { flex-direction: column; text-align: center; }
+            .container { padding: 1rem; }
+            .vote-item { flex-direction: column; align-items: flex-start; }
+            .vote-actions { width: 100%; }
+            .vote-actions .btn { flex: 1; justify-content: center; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
-    <!-- Login Overlay -->
+    <!-- Login -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
             <div class="logo"><i class="fas fa-crown"></i></div>
             <h2>Admin MISS-EGEM 2026</h2>
             <p class="login-error" id="loginError">Mot de passe incorrect</p>
             <input type="password" id="adminPassword" placeholder="Mot de passe admin" onkeypress="if(event.key==='Enter') checkPassword()">
-            <button onclick="checkPassword()">
-                <i class="fas fa-sign-in-alt"></i> Connexion
-            </button>
+            <button onclick="checkPassword()"><i class="fas fa-sign-in-alt"></i> Connexion</button>
         </div>
     </div>
     
-    <!-- Main Content -->
+    <!-- Main -->
     <div id="adminContent" style="display: none;">
         <header class="header">
             <div class="logo-header">
                 <i class="fas fa-crown"></i>
                 <span>Admin - MISS & MISTER EGEM 2026</span>
             </div>
+            <div class="connection-status" id="connectionStatus">
+                <i class="fas fa-circle"></i> <span>Connexion...</span>
+            </div>
             <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i>
-                Retour au site
+                <i class="fas fa-arrow-left"></i> Retour au site
             </a>
         </header>
         
@@ -384,12 +280,12 @@
                 <div class="stat-card">
                     <i class="fas fa-clock"></i>
                     <div class="stat-value" id="pendingCount">0</div>
-                    <div class="stat-label">Votes en attente</div>
+                    <div class="stat-label">En attente</div>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-check-circle"></i>
                     <div class="stat-value" id="validatedCount">0</div>
-                    <div class="stat-label">Votes validés</div>
+                    <div class="stat-label">Validés</div>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-coins"></i>
@@ -410,14 +306,13 @@
             </h2>
             
             <button class="btn btn-validate-all" onclick="validateAllVotes()" id="validateAllBtn" style="display: none;">
-                <i class="fas fa-check-double"></i>
-                Valider tous les votes
+                <i class="fas fa-check-double"></i> Valider tous les votes
             </button>
             
             <div class="pending-votes" id="pendingVotesList">
                 <div class="loading">
                     <i class="fas fa-spinner"></i>
-                    <p>Chargement des votes...</p>
+                    <p>Chargement...</p>
                 </div>
             </div>
         </div>
@@ -434,10 +329,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     
     <script>
-        // Admin password - CHANGEZ CE MOT DE PASSE !
         const ADMIN_PASSWORD = 'egem2026';
         
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDPQmzrglLhI6Q7TT_5_9TGxUGkf0Wubqk",
             authDomain: "miss-egem-2026-8b880.firebaseapp.com",
@@ -452,146 +345,179 @@
         const database = firebase.database();
         
         let pendingVotes = {};
+        let localStats = { validatedCount: 0, totalAmount: 0, totalVotes: 0 };
         
-        // Check password
         function checkPassword() {
             const password = document.getElementById('adminPassword').value;
             if (password === ADMIN_PASSWORD) {
                 document.getElementById('loginOverlay').classList.add('hidden');
                 document.getElementById('adminContent').style.display = 'block';
-                loadPendingVotes();
-                loadConfirmedVotes();
+                initAdmin();
             } else {
                 document.getElementById('loginError').style.display = 'block';
                 document.getElementById('adminPassword').value = '';
             }
         }
         
-        // Load pending votes
+        function initAdmin() {
+            checkConnection();
+            loadPendingVotes();
+            loadStats();
+        }
+        
+        function checkConnection() {
+            database.ref('.info/connected').on('value', function(snapshot) {
+                const status = document.getElementById('connectionStatus');
+                if (snapshot.val() === true) {
+                    status.className = 'connection-status online';
+                    status.innerHTML = '<i class="fas fa-circle"></i> <span>Connecté</span>';
+                } else {
+                    status.className = 'connection-status offline';
+                    status.innerHTML = '<i class="fas fa-circle"></i> <span>Hors ligne</span>';
+                }
+            });
+        }
+        
         function loadPendingVotes() {
             database.ref('pendingVotes').on('value', function(snapshot) {
                 pendingVotes = snapshot.val() || {};
                 renderPendingVotes();
-                updateStats();
+                document.getElementById('pendingCount').textContent = Object.keys(pendingVotes).length;
+                document.getElementById('validateAllBtn').style.display = Object.keys(pendingVotes).length > 0 ? 'flex' : 'none';
+            }, function(error) {
+                console.error('Erreur chargement votes:', error);
+                document.getElementById('pendingVotesList').innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Erreur de connexion</h3><p>Vérifiez votre connexion internet</p></div>';
             });
         }
         
-        // Load confirmed votes stats
-        function loadConfirmedVotes() {
+        function loadStats() {
+            // Load stats from Firebase
+            database.ref('stats').on('value', function(snapshot) {
+                const stats = snapshot.val() || {};
+                localStats.validatedCount = stats.validatedCount || 0;
+                localStats.totalAmount = stats.totalAmount || 0;
+                
+                document.getElementById('validatedCount').textContent = localStats.validatedCount;
+                document.getElementById('totalAmount').textContent = localStats.totalAmount.toLocaleString();
+            });
+            
+            // Calculate total votes from confirmedVotes
             database.ref('confirmedVotes').on('value', function(snapshot) {
                 const votes = snapshot.val() || {};
                 let total = 0;
                 for (let key in votes) {
-                    total += votes[key];
+                    total += votes[key] || 0;
                 }
+                localStats.totalVotes = total;
                 document.getElementById('totalVotes').textContent = total;
             });
-            
-            database.ref('stats').on('value', function(snapshot) {
-                const stats = snapshot.val() || {};
-                document.getElementById('validatedCount').textContent = stats.validatedCount || 0;
-                document.getElementById('totalAmount').textContent = (stats.totalAmount || 0).toLocaleString();
-            });
         }
         
-        // Update stats
-        function updateStats() {
-            const count = Object.keys(pendingVotes).length;
-            document.getElementById('pendingCount').textContent = count;
-            document.getElementById('validateAllBtn').style.display = count > 0 ? 'flex' : 'none';
-        }
-        
-        // Render pending votes
         function renderPendingVotes() {
             const container = document.getElementById('pendingVotesList');
             const keys = Object.keys(pendingVotes);
             
             if (keys.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3>Aucun vote en attente</h3>
-                        <p>Les nouveaux votes apparaîtront ici automatiquement</p>
-                    </div>
-                `;
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><h3>Aucun vote en attente</h3><p>Les nouveaux votes apparaîtront ici</p></div>';
                 return;
             }
+            
+            // Sort by timestamp (newest first)
+            keys.sort(function(a, b) {
+                return new Date(pendingVotes[b].timestamp) - new Date(pendingVotes[a].timestamp);
+            });
             
             let html = '';
             keys.forEach(function(key) {
                 const vote = pendingVotes[key];
                 const date = new Date(vote.timestamp);
-                const dateStr = date.toLocaleDateString('fr-FR') + ' à ' + date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'});
+                const dateStr = date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'});
                 
-                html += `
-                    <div class="vote-item" id="vote-${key}">
-                        <div class="vote-info">
-                            <div class="vote-candidate">${vote.candidateName} (N°${vote.candidateNumber})</div>
-                            <div class="vote-details">
-                                <span><i class="fas fa-coins"></i> ${vote.amount} FCFA</span>
-                                <span><i class="fas fa-vote-yea"></i> ${vote.votes} vote(s)</span>
-                                <span><i class="fas fa-phone"></i> ${vote.phone}</span>
-                                <span><i class="fas fa-mobile-alt"></i> ${vote.paymentMethod === 'orange' ? 'Orange Money' : 'MTN MoMo'}</span>
-                            </div>
-                            <div class="vote-details">
-                                <span><i class="fas fa-clock"></i> ${dateStr}</span>
-                            </div>
-                        </div>
-                        <div class="vote-actions">
-                            <button class="btn btn-validate" onclick="validateVote('${key}')">
-                                <i class="fas fa-check"></i> Valider
-                            </button>
-                            <button class="btn btn-reject" onclick="rejectVote('${key}')">
-                                <i class="fas fa-times"></i> Rejeter
-                            </button>
-                        </div>
-                    </div>
-                `;
+                html += '<div class="vote-item" id="vote-' + key + '">' +
+                    '<div class="vote-info">' +
+                        '<div class="vote-candidate">' + (vote.candidateName || 'Candidat ' + vote.candidateNumber) + ' (N°' + vote.candidateNumber + ')</div>' +
+                        '<div class="vote-details">' +
+                            '<span><i class="fas fa-coins"></i> ' + vote.amount + ' FCFA</span>' +
+                            '<span><i class="fas fa-vote-yea"></i> ' + vote.votes + ' vote(s)</span>' +
+                            '<span><i class="fas fa-phone"></i> ' + vote.phone + '</span>' +
+                        '</div>' +
+                        '<div class="vote-details">' +
+                            '<span><i class="fas fa-mobile-alt"></i> ' + (vote.paymentMethod === 'orange' ? 'Orange Money' : 'MTN MoMo') + '</span>' +
+                            '<span><i class="fas fa-clock"></i> ' + dateStr + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="vote-actions">' +
+                        '<button class="btn btn-validate" onclick="validateVote(\'' + key + '\')">' +
+                            '<i class="fas fa-check"></i> Valider' +
+                        '</button>' +
+                        '<button class="btn btn-reject" onclick="rejectVote(\'' + key + '\')">' +
+                            '<i class="fas fa-times"></i> Rejeter' +
+                        '</button>' +
+                    '</div>' +
+                '</div>';
             });
             
             container.innerHTML = html;
         }
         
-        // Validate a vote
         function validateVote(voteKey) {
             const vote = pendingVotes[voteKey];
-            if (!vote) return;
+            if (!vote) {
+                alert('Vote introuvable');
+                return;
+            }
             
             const candidateKey = 'candidate_' + vote.candidateNumber;
             
-            // Get current vote count
-            database.ref('confirmedVotes/' + candidateKey).once('value').then(function(snapshot) {
-                const currentVotes = snapshot.val() || 0;
-                const newVotes = currentVotes + vote.votes;
-                
-                // Update confirmed votes
-                const updates = {};
-                updates['confirmedVotes/' + candidateKey] = newVotes;
-                
-                return database.ref().update(updates);
-            }).then(function() {
-                // Update stats
-                return database.ref('stats').once('value');
-            }).then(function(snapshot) {
-                const stats = snapshot.val() || { validatedCount: 0, totalAmount: 0 };
-                return database.ref('stats').update({
-                    validatedCount: (stats.validatedCount || 0) + 1,
-                    totalAmount: (stats.totalAmount || 0) + vote.amount
+            // Disable button during operation
+            const btn = document.querySelector('#vote-' + voteKey + ' .btn-validate');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            }
+            
+            // Get current vote count and update
+            database.ref('confirmedVotes/' + candidateKey).once('value')
+                .then(function(snapshot) {
+                    const currentVotes = snapshot.val() || 0;
+                    const newVotes = currentVotes + vote.votes;
+                    
+                    // Create updates object
+                    const updates = {};
+                    updates['confirmedVotes/' + candidateKey] = newVotes;
+                    
+                    return database.ref().update(updates);
+                })
+                .then(function() {
+                    // Update stats
+                    return database.ref('stats').once('value');
+                })
+                .then(function(snapshot) {
+                    const stats = snapshot.val() || { validatedCount: 0, totalAmount: 0 };
+                    return database.ref('stats').set({
+                        validatedCount: (stats.validatedCount || 0) + 1,
+                        totalAmount: (stats.totalAmount || 0) + vote.amount
+                    });
+                })
+                .then(function() {
+                    // Remove from pending
+                    return database.ref('pendingVotes/' + voteKey).remove();
+                })
+                .then(function() {
+                    showToast('✓ Vote validé ! +' + vote.votes + ' pour ' + (vote.candidateName || 'Candidat ' + vote.candidateNumber));
+                })
+                .catch(function(error) {
+                    console.error('Erreur validation:', error);
+                    alert('Erreur lors de la validation. Réessayez.');
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-check"></i> Valider';
+                    }
                 });
-            }).then(function() {
-                // Remove from pending
-                return database.ref('pendingVotes/' + voteKey).remove();
-            }).then(function() {
-                showToast('Vote validé ! +' + vote.votes + ' vote(s) pour ' + vote.candidateName);
-            }).catch(function(error) {
-                console.error('Erreur:', error);
-                alert('Erreur lors de la validation');
-            });
         }
         
-        // Reject a vote
         function rejectVote(voteKey) {
-            if (!confirm('Êtes-vous sûr de vouloir rejeter ce vote ?')) return;
+            if (!confirm('Rejeter ce vote ? Cette action est irréversible.')) return;
             
             database.ref('pendingVotes/' + voteKey).remove()
                 .then(function() {
@@ -603,24 +529,29 @@
                 });
         }
         
-        // Validate all votes
         function validateAllVotes() {
-            if (!confirm('Valider TOUS les votes en attente ?')) return;
+            const count = Object.keys(pendingVotes).length;
+            if (!confirm('Valider les ' + count + ' votes en attente ?')) return;
             
             const keys = Object.keys(pendingVotes);
-            keys.forEach(function(key) {
-                validateVote(key);
-            });
+            let index = 0;
+            
+            function validateNext() {
+                if (index < keys.length) {
+                    validateVote(keys[index]);
+                    index++;
+                    setTimeout(validateNext, 500); // Wait 500ms between each
+                }
+            }
+            
+            validateNext();
         }
         
-        // Toast notification
         function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').textContent = message;
             toast.classList.add('show');
-            setTimeout(function() {
-                toast.classList.remove('show');
-            }, 3000);
+            setTimeout(function() { toast.classList.remove('show'); }, 3000);
         }
     </script>
 </body>
